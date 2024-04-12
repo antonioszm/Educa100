@@ -19,6 +19,11 @@ public class TurmaEntity {
     @ManyToOne
     private List<AlunosEntity> alunos;
 
+
+    @OneToMany
+    @JoinColumn(name = "id_professor", nullable = false)
+    private DocenteEntity professor;
+
     @OneToMany
     @JoinColumn(name = "id_curso", nullable = false)
     private int id_curso;
