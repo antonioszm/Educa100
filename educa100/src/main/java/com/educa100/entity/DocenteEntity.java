@@ -23,5 +23,5 @@ public class DocenteEntity {
 
     @OneToOne
     @JoinColumn(name = "id_usuario", nullable = false)
-    private UsuarioEntity id_usuario;
+    private int id_usuario;
 }
