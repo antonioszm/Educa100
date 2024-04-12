@@ -17,7 +17,7 @@ public class TurmaEntity {
     private String nome;
 
     @ManyToOne
-    private List<AlunosEntity> alunos;
+    private List<AlunoEntity> alunos;
 
 
     @OneToMany
