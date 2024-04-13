@@ -17,6 +17,6 @@ public interface MateriaRepository extends JpaRepository {
     @Query(value = "UPDATE Docente SET nome = :nome, id_curso = :id_curso WHERE id = :id", nativeQuery = true)
     void update(@Param("id") int id,
                 @Param("nome") String nome,
-                 @Param("id_turma") int id_curso
+                 @Param("id_curso") int id_curso
     );
 }
