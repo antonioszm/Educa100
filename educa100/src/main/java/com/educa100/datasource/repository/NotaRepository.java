@@ -2,6 +2,7 @@ package com.educa100.datasource.repository;
 
 import com.educa100.datasource.entity.AlunoEntity;
 import com.educa100.datasource.entity.DocenteEntity;
+import com.educa100.datasource.entity.NotaEntity;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -13,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-public interface NotaRepository extends JpaRepository {
+public interface NotaRepository extends JpaRepository<NotaEntity, Integer> {
 
     @Modifying
     @Transactional
