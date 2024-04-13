@@ -22,22 +22,23 @@ public class DocenteServiceImpl implements DocenteService{
     }
 
     @Override
-    public int atualizar(DocenteEntity docente) {
-        return 0;
+    public void atualizar(DocenteEntity docente) {
+        repository.update(docente.getId(),docente.getNome(),docente.getData_entrada(),docente.getId_usuario());
     }
 
     @Override
     public void removerPorId(int id) {
-
+        DocenteEntity docente = listarPorId(id);
+        repository.delete(docente);
     }
 
     @Override
     public List<DocenteEntity> listarTodos() {
-        return null;
+        return repository.findAll();
     }
 
     @Override
     public DocenteEntity listarPorId(int id) {
-        return null;
+        return repository.findById(id).orElseThrow(() -> new DocenteNotFoundException(id));
     }
 }
