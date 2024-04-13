@@ -21,8 +21,8 @@ public interface TurmaRepository extends JpaRepository {
     @Query(value = "UPDATE Docente SET nome = :nome, alunos = :alunos, id_professor = :professor, id_curso = :id_curso WHERE id = :id", nativeQuery = true)
     void update(@Param("id") int id,
                 @Param("nome") String nome,
-                @Param("turmas") List<AlunoEntity> alunos,
-                @Param("materias") DocenteEntity professor,
+                @Param("alunos") List<AlunoEntity> alunos,
+                @Param("professor") DocenteEntity professor,
                 @Param("id_curso") int id_curso
     );
 }
