@@ -1,5 +1,6 @@
 package com.educa100.datasource.repository;
 
+import com.educa100.datasource.entity.CursoEntity;
 import com.educa100.datasource.entity.MateriaEntity;
 import com.educa100.datasource.entity.TurmaEntity;
 import jakarta.transaction.Transactional;
@@ -13,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-public interface CursoRepository extends JpaRepository {
+public interface CursoRepository extends JpaRepository<CursoEntity, Integer> {
 
     @Modifying
     @Transactional
