@@ -23,7 +23,8 @@ public class AlunoServiceImpl implements AlunoService{
     }
 
     @Override
-    public void atualizar(AlunoEntity aluno) {
+    public void atualizar(int id) {
+        AlunoEntity aluno = listarPorId(id);
         repository.update(aluno.getId(),aluno.getNome(), aluno.getData_nascimento(), aluno.getId_usuario(), aluno.getId_turma());
     }
 

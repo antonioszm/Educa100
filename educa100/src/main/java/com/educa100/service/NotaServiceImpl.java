@@ -23,7 +23,8 @@ public class NotaServiceImpl implements NotaService{
     }
 
     @Override
-    public void atualizar(NotaEntity nota) {
+    public void atualizar(int id) {
+        NotaEntity nota = listarPorId(id);
         repository.update(nota.getId(),nota.getId_aluno(), nota.getId_professor(), nota.getId_materia(),nota.getValor(), nota.getData());
     }
 
