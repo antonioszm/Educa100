@@ -1,15 +1,16 @@
-package com.educa100.entity;
+package com.educa100.datasource.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.util.Date;
 
 @Entity
 @Data
-@Table(name = "aluno")
-public class AlunoEntity {
+@Table(name = "docente")
+public class DocenteEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -17,13 +18,10 @@ public class AlunoEntity {
     @Column(unique = true)
     private String nome;
 
-    private Date data_nascimento;
+    @ColumnDefault(value = "CURRENT_TIMESTAMP")
+    private Date data_entrada;// = new Date();
 
     @OneToOne
     @JoinColumn(name = "id_usuario", nullable = false)
     private int id_usuario;
-
-    @OneToMany
-    @JoinColumn(name = "id_turma", nullable = false)
-    private int id_turma;
 }

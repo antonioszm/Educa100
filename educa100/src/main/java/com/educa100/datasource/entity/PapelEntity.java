@@ -1,4 +1,4 @@
-package com.educa100.entity;
+package com.educa100.datasource.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
