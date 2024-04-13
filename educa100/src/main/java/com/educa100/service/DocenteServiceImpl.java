@@ -2,6 +2,7 @@ package com.educa100.service;
 
 import com.educa100.datasource.entity.DocenteEntity;
 import com.educa100.datasource.repository.DocenteRepository;
+import com.educa100.infra.exception.DocenteNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
