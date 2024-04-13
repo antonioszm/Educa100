@@ -23,7 +23,8 @@ public class MateriaServiceImpl implements MateriaService{
     }
 
     @Override
-    public void atualizar(MateriaEntity materia) {
+    public void atualizar(int id) {
+        MateriaEntity materia = listarPorId(id);
         repository.update(materia.getId(),materia.getNome(), materia.getId_curso());
     }
 

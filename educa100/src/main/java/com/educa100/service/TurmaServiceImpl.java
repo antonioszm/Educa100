@@ -23,7 +23,8 @@ public class TurmaServiceImpl implements TurmaService{
     }
 
     @Override
-    public void atualizar(TurmaEntity turma) {
+    public void atualizar(int id) {
+        TurmaEntity turma = listarPorId(id);
         repository.update(turma.getId(),turma.getNome(), turma.getAlunos(), turma.getProfessor(), turma.getId_curso());
     }
 

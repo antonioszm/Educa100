@@ -23,7 +23,8 @@ public class DocenteServiceImpl implements DocenteService{
     }
 
     @Override
-    public void atualizar(DocenteEntity docente) {
+    public void atualizar(int id) {
+        DocenteEntity docente = listarPorId(id);
         repository.update(docente.getId(),docente.getNome(),docente.getData_entrada(),docente.getId_usuario());
     }
 
