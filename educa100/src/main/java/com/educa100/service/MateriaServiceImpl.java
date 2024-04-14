@@ -43,4 +43,9 @@ public class MateriaServiceImpl implements MateriaService{
     public MateriaEntity listarPorId(int id) {
         return repository.findById(id).orElseThrow(() -> new MateriaNotFoundException(id));
     }
+
+    @Override
+    public List<MateriaEntity> listarPorIdCurso(int id) {
+        return repository.findByIdCurso(id);
+    }
 }
