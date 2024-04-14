@@ -10,4 +10,6 @@ public interface MateriaService {
     public void removerPorId(int id);
     public List<MateriaEntity> listarTodos();
     public MateriaEntity listarPorId(int id);
+    public List<MateriaEntity> listarPorIdCurso(int id);
+
 }
