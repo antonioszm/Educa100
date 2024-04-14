@@ -26,4 +26,6 @@ public interface NotaRepository extends JpaRepository<NotaEntity, Integer> {
                 @Param("valor") double valor,
                 @Param("data") Date data
     );
+
+    List<NotaEntity> findByIdAluno(int id);
 }

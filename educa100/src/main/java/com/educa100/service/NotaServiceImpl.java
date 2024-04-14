@@ -1,10 +1,13 @@
 package com.educa100.service;
 
+import com.educa100.datasource.entity.AlunoEntity;
 import com.educa100.datasource.entity.NotaEntity;
+import com.educa100.datasource.entity.TurmaEntity;
 import com.educa100.datasource.repository.NotaRepository;
 import com.educa100.infra.exception.NotaNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -12,7 +15,7 @@ public class NotaServiceImpl implements NotaService{
 
     private final NotaRepository repository;
 
-    public NotaServiceImpl(NotaRepository repository) {
+    public NotaServiceImpl(NotaRepository repository, AlunoService alunoService) {
         this.repository = repository;
     }
 
@@ -33,10 +36,14 @@ public class NotaServiceImpl implements NotaService{
         NotaEntity nota = listarPorId(id);
         repository.delete(nota);
     }
-
     @Override
     public List<NotaEntity> listarTodos() {
         return repository.findAll();
+    }
+
+    @Override
+    public List<NotaEntity> listarPorIdAluno(int id) {
+      return repository.findByIdAluno(id);
     }
 
     @Override
