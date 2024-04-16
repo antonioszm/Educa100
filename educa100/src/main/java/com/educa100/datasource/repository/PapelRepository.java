@@ -13,4 +13,5 @@ import java.util.Date;
 
 @Repository
 public interface PapelRepository extends JpaRepository<PapelEntity, Integer> {
+    PapelEntity findByNome(String nome);
 }
