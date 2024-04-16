@@ -23,7 +23,7 @@ public class AlunoEntity {
     @JoinColumn(name = "id_usuario", nullable = false)
     private int id_usuario;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "id_turma", nullable = false)
     private int id_turma;
 }
