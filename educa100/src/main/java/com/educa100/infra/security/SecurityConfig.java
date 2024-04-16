@@ -32,7 +32,7 @@ public class SecurityConfig {
     @Value("${jwt.private.key}")
     private RSAPrivateKey privateKey;
     @Bean
-    private SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
                         //.requestMatchers("/login").permitAll()
@@ -55,4 +55,8 @@ public class SecurityConfig {
         return new NimbusJwtEncoder(jwks);
     }
 
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
 }
