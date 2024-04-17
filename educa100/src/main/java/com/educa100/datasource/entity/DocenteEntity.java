@@ -23,5 +23,6 @@ public class DocenteEntity {
 
     @OneToOne
     @JoinColumn(name = "id_usuario", nullable = false)
-    private Long id_usuario;
+    @Column(unique = true)
+    private UsuarioEntity id_usuario;
 }

@@ -21,9 +21,10 @@ public class AlunoEntity {
 
     @OneToOne
     @JoinColumn(name = "id_usuario", nullable = false)
-    private Long id_usuario;
+    @Column(unique = true)
+    private UsuarioEntity id_usuario;
 
     @ManyToOne
     @JoinColumn(name = "id_turma", nullable = false)
-    private Long id_turma;
+    private TurmaEntity id_turma;
 }

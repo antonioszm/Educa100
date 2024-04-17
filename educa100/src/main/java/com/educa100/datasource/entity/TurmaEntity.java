@@ -26,5 +26,5 @@ public class TurmaEntity {
 
     @ManyToOne
     @JoinColumn(name = "id_curso", nullable = false)
-    private Long id_curso;
+    private CursoEntity id_curso;
 }

@@ -1,9 +1,6 @@
 package com.educa100.datasource.repository;
 
-import com.educa100.datasource.entity.AlunoEntity;
-import com.educa100.datasource.entity.DocenteEntity;
-import com.educa100.datasource.entity.MateriaEntity;
-import com.educa100.datasource.entity.TurmaEntity;
+import com.educa100.datasource.entity.*;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -23,6 +20,6 @@ public interface TurmaRepository extends JpaRepository<TurmaEntity, Long> {
                 @Param("nome") String nome,
                 @Param("alunos") List<AlunoEntity> alunos,
                 @Param("professor") DocenteEntity professor,
-                @Param("id_curso") Long id_curso
+                @Param("id_curso") CursoEntity id_curso
     );
 }
