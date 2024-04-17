@@ -1,5 +1,6 @@
 package com.educa100.datasource.repository;
 
+import com.educa100.datasource.entity.CursoEntity;
 import com.educa100.datasource.entity.MateriaEntity;
 import com.educa100.datasource.entity.NotaEntity;
 import jakarta.transaction.Transactional;
@@ -20,7 +21,7 @@ public interface MateriaRepository extends JpaRepository<MateriaEntity, Long> {
     @Query(value = "UPDATE Docente SET nome = :nome, id_curso = :id_curso WHERE id = :id", nativeQuery = true)
     void update(@Param("id") Long id,
                 @Param("nome") String nome,
-                 @Param("id_curso") Long id_curso
+                 @Param("id_curso") CursoEntity id_curso
     );
 
     List<MateriaEntity> findByIdCurso(Long id);

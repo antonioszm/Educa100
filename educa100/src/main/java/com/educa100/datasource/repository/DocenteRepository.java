@@ -1,6 +1,7 @@
 package com.educa100.datasource.repository;
 
 import com.educa100.datasource.entity.DocenteEntity;
+import com.educa100.datasource.entity.UsuarioEntity;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -19,6 +20,6 @@ public interface DocenteRepository extends JpaRepository<DocenteEntity, Long> {
     void update(@Param("id") Long id,
                 @Param("nome") String nome,
                 @Param("data_entrada")Date data_entrada,
-                @Param("id_usuario") Long id_usuario
+                @Param("id_usuario") UsuarioEntity id_usuario
     );
 }

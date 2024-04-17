@@ -15,15 +15,15 @@ public class NotaEntity {
 
     @OneToOne
     @JoinColumn(name = "id_aluno", nullable = false)
-    private Long id_aluno;
+    private AlunoEntity id_aluno;
 
     @OneToOne
     @JoinColumn(name = "id_professor", nullable = false)
-    private Long id_professor;
+    private DocenteEntity id_professor;
 
     @OneToOne
     @JoinColumn(name = "id_materia", nullable = false)
-    private Long id_materia;
+    private MateriaEntity id_materia;
 
     private double valor;
 
