@@ -34,6 +34,7 @@ public class AdmUsuarioConfig implements CommandLineRunner {
                     var usuario = new UsuarioEntity();
                     usuario.setLogin("adm");
                     usuario.setSenha(bCryptPasswordEncoder.encode("1000"));
+                    usuario.setId_papel(papelAdm);
                 }
         );
     }
