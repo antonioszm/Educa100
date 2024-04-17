@@ -22,7 +22,6 @@ public class DocenteEntity {
     private Date data_entrada;// = new Date();
 
     @OneToOne
-    @JoinColumn(name = "id_usuario", nullable = false)
-    @Column(unique = true)
+    @JoinColumn(name = "id_usuario", nullable = false, unique = true)
     private UsuarioEntity id_usuario;
 }

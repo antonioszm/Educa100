@@ -2,6 +2,7 @@ package com.educa100.datasource.repository;
 
 import com.educa100.datasource.entity.AlunoEntity;
 import com.educa100.datasource.entity.DocenteEntity;
+import com.educa100.datasource.entity.TurmaEntity;
 import com.educa100.datasource.entity.UsuarioEntity;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -22,6 +23,6 @@ public interface AlunoRepository extends JpaRepository<AlunoEntity, Long> {
                 @Param("nome") String nome,
                 @Param("data_nascimento")Date data_nascimento,
                 @Param("id_usuario") UsuarioEntity id_usuario,
-                @Param("id_turma") DocenteEntity id_turma
+                @Param("id_turma") TurmaEntity id_turma
     );
 }

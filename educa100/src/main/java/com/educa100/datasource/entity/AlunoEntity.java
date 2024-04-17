@@ -20,8 +20,7 @@ public class AlunoEntity {
     private Date data_nascimento;
 
     @OneToOne
-    @JoinColumn(name = "id_usuario", nullable = false)
-    @Column(unique = true)
+    @JoinColumn(name = "id_usuario", nullable = false, unique = true)
     private UsuarioEntity id_usuario;
 
     @ManyToOne
