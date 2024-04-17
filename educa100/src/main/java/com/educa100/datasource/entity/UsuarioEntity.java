@@ -1,5 +1,6 @@
 package com.educa100.datasource.entity;
 
+import com.educa100.controller.dto.request.LoginResquest;
 import com.educa100.controller.dto.request.UsuarioRequest;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -22,7 +23,7 @@ public class UsuarioEntity {
     @JoinColumn(name = "id_papel", nullable = false)
     private PapelEntity id_papel;
 
-    public boolean isLoginCorreto(UsuarioRequest usuarioRequest, PasswordEncoder passwordEncoder){
-        return passwordEncoder.matches(usuarioRequest.senha(), this.senha);
+    public boolean isLoginCorreto(LoginResquest loginResquest, PasswordEncoder passwordEncoder){
+        return passwordEncoder.matches(loginResquest.senha(), this.senha);
     }
 }

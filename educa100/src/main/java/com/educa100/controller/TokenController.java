@@ -1,5 +1,6 @@
 package com.educa100.controller;
 
+import com.educa100.controller.dto.request.LoginResquest;
 import com.educa100.controller.dto.request.UsuarioRequest;
 import com.educa100.controller.dto.response.LoginResponse;
 import com.educa100.datasource.repository.UsuarioRepository;
@@ -31,11 +32,11 @@ public class TokenController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody UsuarioRequest usuarioRequest){
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginResquest loginRequest){
 
-        var usuario = usuarioRepository.findByLogin(usuarioRequest.login());
+        var usuario = usuarioRepository.findByLogin(loginRequest.login());
 
-        if (usuario.isEmpty()|| !usuario.get().isLoginCorreto(usuarioRequest, bCryptPasswordEncoder)){
+        if (usuario.isEmpty()|| !usuario.get().isLoginCorreto(loginRequest, bCryptPasswordEncoder)){
             throw new BadCredentialsException("Login ou Senha incorretos");
         }
         var agora = Instant.now();
