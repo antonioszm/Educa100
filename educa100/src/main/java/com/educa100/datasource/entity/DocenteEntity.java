@@ -13,7 +13,7 @@ import java.util.Date;
 public class DocenteEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(unique = true)
     private String nome;
@@ -23,5 +23,5 @@ public class DocenteEntity {
 
     @OneToOne
     @JoinColumn(name = "id_usuario", nullable = false)
-    private int id_usuario;
+    private Long id_usuario;
 }

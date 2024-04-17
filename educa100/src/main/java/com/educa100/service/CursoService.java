@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface CursoService {
     public CursoEntity salvar(CursoEntity curso);
-    public void atualizar(int id);
-    public void removerPorId(int id);
+    public void atualizar(Long id);
+    public void removerPorId(Long id);
     public List<CursoEntity> listarTodos();
-    public CursoEntity listarPorId(int id);
+    public CursoEntity listarPorId(Long id);
 }

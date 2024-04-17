@@ -7,5 +7,5 @@ import com.educa100.datasource.entity.TurmaEntity;
 
 import java.util.List;
 
-public record TurmaRequest(String nome, List<AlunoEntity> alunos, DocenteEntity professor, int id_curso) {
+public record TurmaRequest(String nome, List<AlunoEntity> alunos, DocenteEntity professor, Long id_curso) {
 }

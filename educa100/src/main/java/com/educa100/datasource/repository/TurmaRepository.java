@@ -14,15 +14,15 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface TurmaRepository extends JpaRepository<TurmaEntity, Integer> {
+public interface TurmaRepository extends JpaRepository<TurmaEntity, Long> {
 
     @Modifying
     @Transactional
     @Query(value = "UPDATE Docente SET nome = :nome, alunos = :alunos, id_professor = :professor, id_curso = :id_curso WHERE id = :id", nativeQuery = true)
-    void update(@Param("id") int id,
+    void update(@Param("id") Long id,
                 @Param("nome") String nome,
                 @Param("alunos") List<AlunoEntity> alunos,
                 @Param("professor") DocenteEntity professor,
-                @Param("id_curso") int id_curso
+                @Param("id_curso") Long id_curso
     );
 }

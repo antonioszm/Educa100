@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface DocenteService {
     public DocenteEntity salvar(DocenteEntity docente);
-    public void atualizar(int id);
-    public void removerPorId(int id);
+    public void atualizar(Long id);
+    public void removerPorId(Long id);
     public List<DocenteEntity> listarTodos();
-    public DocenteEntity listarPorId(int id);
+    public DocenteEntity listarPorId(Long id);
 }

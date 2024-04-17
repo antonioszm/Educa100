@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface AlunoService {
     public AlunoEntity salvar(AlunoEntity aluno);
-    public void atualizar(int id);
-    public void removerPorId(int id);
+    public void atualizar(Long id);
+    public void removerPorId(Long id);
     public List<AlunoEntity> listarTodos();
-    public AlunoEntity listarPorId(int id);
+    public AlunoEntity listarPorId(Long id);
 }

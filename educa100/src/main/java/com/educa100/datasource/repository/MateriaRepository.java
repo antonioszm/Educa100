@@ -13,15 +13,15 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-public interface MateriaRepository extends JpaRepository<MateriaEntity, Integer> {
+public interface MateriaRepository extends JpaRepository<MateriaEntity, Long> {
 
     @Modifying
     @Transactional
     @Query(value = "UPDATE Docente SET nome = :nome, id_curso = :id_curso WHERE id = :id", nativeQuery = true)
-    void update(@Param("id") int id,
+    void update(@Param("id") Long id,
                 @Param("nome") String nome,
-                 @Param("id_curso") int id_curso
+                 @Param("id_curso") Long id_curso
     );
 
-    List<MateriaEntity> findByIdCurso(int id);
+    List<MateriaEntity> findByIdCurso(Long id);
 }

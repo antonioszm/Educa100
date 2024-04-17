@@ -14,12 +14,12 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-public interface CursoRepository extends JpaRepository<CursoEntity, Integer> {
+public interface CursoRepository extends JpaRepository<CursoEntity, Long> {
 
     @Modifying
     @Transactional
     @Query(value = "UPDATE Docente SET nome = :nome, turmas = :turmas, materias = :materias WHERE id = :id", nativeQuery = true)
-    void update(@Param("id") int id,
+    void update(@Param("id") Long id,
                 @Param("nome") String nome,
                 @Param("turmas") List<TurmaEntity> turmas,
                 @Param("materias") List<MateriaEntity> materias

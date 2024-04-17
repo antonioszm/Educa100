@@ -12,7 +12,7 @@ import java.util.Date;
 public class AlunoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(unique = true)
     private String nome;
@@ -21,9 +21,9 @@ public class AlunoEntity {
 
     @OneToOne
     @JoinColumn(name = "id_usuario", nullable = false)
-    private int id_usuario;
+    private Long id_usuario;
 
     @ManyToOne
     @JoinColumn(name = "id_turma", nullable = false)
-    private int id_turma;
+    private Long id_turma;
 }

@@ -18,18 +18,18 @@ public class DocenteServiceImpl implements DocenteService{
 
     @Override
     public DocenteEntity salvar(DocenteEntity docente) {
-        docente.setId(0);
+        docente.setId(null);
         return repository.save(docente);
     }
 
     @Override
-    public void atualizar(int id) {
+    public void atualizar(Long id) {
         DocenteEntity docente = listarPorId(id);
         repository.update(docente.getId(),docente.getNome(),docente.getData_entrada(),docente.getId_usuario());
     }
 
     @Override
-    public void removerPorId(int id) {
+    public void removerPorId(Long id) {
         DocenteEntity docente = listarPorId(id);
         repository.delete(docente);
     }
@@ -40,7 +40,7 @@ public class DocenteServiceImpl implements DocenteService{
     }
 
     @Override
-    public DocenteEntity listarPorId(int id) {
+    public DocenteEntity listarPorId(Long id) {
         return repository.findById(id).orElseThrow(() -> new DocenteNotFoundException(id));
     }
 }

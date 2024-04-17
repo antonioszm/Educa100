@@ -11,7 +11,7 @@ import java.util.List;
 public class TurmaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(unique = true)
     private String nome;
@@ -26,5 +26,5 @@ public class TurmaEntity {
 
     @ManyToOne
     @JoinColumn(name = "id_curso", nullable = false)
-    private int id_curso;
+    private Long id_curso;
 }

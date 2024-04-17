@@ -18,7 +18,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 
     @Override
     public UsuarioEntity salvar(UsuarioEntity usuario) {
-        usuario.setId(0);
+        usuario.setId(null);
         return repository.save(usuario);
     }
 }

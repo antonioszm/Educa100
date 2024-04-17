@@ -11,14 +11,14 @@ import org.springframework.stereotype.Repository;
 import java.util.Date;
 
 @Repository
-public interface DocenteRepository extends JpaRepository<DocenteEntity, Integer> {
+public interface DocenteRepository extends JpaRepository<DocenteEntity, Long> {
 
     @Modifying
     @Transactional
     @Query(value = "UPDATE Docente SET nome = :nome, data_entrada = :data_entrada, id_usuario = :id_usuario WHERE id = :id", nativeQuery = true)
-    void update(@Param("id") int id,
+    void update(@Param("id") Long id,
                 @Param("nome") String nome,
                 @Param("data_entrada")Date data_entrada,
-                @Param("id_usuario") int id_usuario
+                @Param("id_usuario") Long id_usuario
     );
 }
