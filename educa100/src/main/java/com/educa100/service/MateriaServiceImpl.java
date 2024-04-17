@@ -46,6 +46,6 @@ public class MateriaServiceImpl implements MateriaService{
 
     @Override
     public List<MateriaEntity> listarPorIdCurso(Long id) {
-        return repository.findByIdCurso(id);
+        return repository.findByCurso(id);
     }
 }

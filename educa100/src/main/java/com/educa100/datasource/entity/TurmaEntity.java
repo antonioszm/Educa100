@@ -16,7 +16,8 @@ public class TurmaEntity {
     @Column(unique = true)
     private String nome;
 
-    @ManyToOne
+    @OneToMany
+    @JoinColumn(name = "id_alunos")
     private List<AlunoEntity> alunos;
 
 

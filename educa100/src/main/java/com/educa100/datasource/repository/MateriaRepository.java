@@ -24,5 +24,6 @@ public interface MateriaRepository extends JpaRepository<MateriaEntity, Long> {
                  @Param("id_curso") CursoEntity id_curso
     );
 
-    List<MateriaEntity> findByIdCurso(Long id);
+    @Query("SELECT m FROM MateriaEntity m WHERE m.id_curso.id = :cursoId")
+    List<MateriaEntity> findByCurso(@Param("cursoId") Long cursoId);
 }
