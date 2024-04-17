@@ -19,7 +19,7 @@ public interface NotaRepository extends JpaRepository<NotaEntity, Long> {
 
     @Modifying
     @Transactional
-    @Query(value = "UPDATE Docente SET id_aluno = :id_aluno, id_professor = :id_professor, id_materia = :id_materia, valor = :valor, data = :data, WHERE id = :id", nativeQuery = true)
+    @Query(value = "UPDATE Nota SET id_aluno = :id_aluno, id_professor = :id_professor, id_materia = :id_materia, valor = :valor, data = :data, WHERE id = :id", nativeQuery = true)
     void update(@Param("id") Long id,
                 @Param("id_aluno") AlunoEntity id_aluno,
                 @Param("id_professor") DocenteEntity id_professor,
@@ -28,5 +28,6 @@ public interface NotaRepository extends JpaRepository<NotaEntity, Long> {
                 @Param("data") Date data
     );
 
-    List<NotaEntity> findByIdAluno(Long id);
+    @Query("SELECT n FROM NotaEntity n WHERE n.id_aluno.id = :alunoId")
+    List<NotaEntity> findByIdAluno(Long alunoId);
 }
