@@ -14,7 +14,7 @@ public class MateriaEntity {
     @Column(unique = true)
     private String nome;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "id_curso", nullable = false)
     private int id_curso;
 }
