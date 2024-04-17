@@ -20,11 +20,11 @@ public class TurmaEntity {
     private List<AlunoEntity> alunos;
 
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "id_professor", nullable = false)
     private DocenteEntity professor;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "id_curso", nullable = false)
     private int id_curso;
 }
