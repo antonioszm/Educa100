@@ -18,18 +18,18 @@ public class AlunoServiceImpl implements AlunoService{
 
     @Override
     public AlunoEntity salvar(AlunoEntity aluno) {
-        aluno.setId(0);
+        aluno.setId(null);
         return repository.save(aluno);
     }
 
     @Override
-    public void atualizar(int id) {
+    public void atualizar(Long id) {
         AlunoEntity aluno = listarPorId(id);
         repository.update(aluno.getId(),aluno.getNome(), aluno.getData_nascimento(), aluno.getId_usuario(), aluno.getId_turma());
     }
 
     @Override
-    public void removerPorId(int id) {
+    public void removerPorId(Long id) {
         AlunoEntity aluno = listarPorId(id);
         repository.delete(aluno);
     }
@@ -40,7 +40,7 @@ public class AlunoServiceImpl implements AlunoService{
     }
 
     @Override
-    public AlunoEntity listarPorId(int id) {
+    public AlunoEntity listarPorId(Long id) {
         return repository.findById(id).orElseThrow(() -> new AlunoNotFoundException(id));
     }
 }

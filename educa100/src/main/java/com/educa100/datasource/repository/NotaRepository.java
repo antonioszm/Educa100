@@ -14,18 +14,18 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-public interface NotaRepository extends JpaRepository<NotaEntity, Integer> {
+public interface NotaRepository extends JpaRepository<NotaEntity, Long> {
 
     @Modifying
     @Transactional
     @Query(value = "UPDATE Docente SET id_aluno = :id_aluno, id_professor = :id_professor, id_materia = :id_materia, valor = :valor, data = :data, WHERE id = :id", nativeQuery = true)
-    void update(@Param("id") int id,
-                @Param("id_aluno") int id_aluno,
-                @Param("id_professor") int id_professor,
-                @Param("id_materia") int id_materia,
+    void update(@Param("id") Long id,
+                @Param("id_aluno") Long id_aluno,
+                @Param("id_professor") Long id_professor,
+                @Param("id_materia") Long id_materia,
                 @Param("valor") double valor,
                 @Param("data") Date data
     );
 
-    List<NotaEntity> findByIdAluno(int id);
+    List<NotaEntity> findByIdAluno(Long id);
 }

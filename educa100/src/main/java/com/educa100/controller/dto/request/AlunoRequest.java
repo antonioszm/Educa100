@@ -4,5 +4,5 @@ import com.educa100.datasource.entity.PapelEntity;
 
 import java.util.Date;
 
-public record AlunoRequest(String nome, Date dataNascimento, int id_usuario, int id_papel) {
+public record AlunoRequest(String nome, Date dataNascimento, Long id_usuario, Long id_papel) {
 }

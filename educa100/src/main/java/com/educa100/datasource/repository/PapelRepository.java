@@ -12,6 +12,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Date;
 
 @Repository
-public interface PapelRepository extends JpaRepository<PapelEntity, Integer> {
+public interface PapelRepository extends JpaRepository<PapelEntity, Long> {
     PapelEntity findByNome(String nome);
 }

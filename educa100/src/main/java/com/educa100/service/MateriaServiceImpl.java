@@ -18,18 +18,18 @@ public class MateriaServiceImpl implements MateriaService{
 
     @Override
     public MateriaEntity salvar(MateriaEntity materia) {
-        materia.setId(0);
+        materia.setId(null);
         return repository.save(materia);
     }
 
     @Override
-    public void atualizar(int id) {
+    public void atualizar(Long id) {
         MateriaEntity materia = listarPorId(id);
         repository.update(materia.getId(),materia.getNome(), materia.getId_curso());
     }
 
     @Override
-    public void removerPorId(int id) {
+    public void removerPorId(Long id) {
         MateriaEntity materia = listarPorId(id);
         repository.delete(materia);
     }
@@ -40,12 +40,12 @@ public class MateriaServiceImpl implements MateriaService{
     }
 
     @Override
-    public MateriaEntity listarPorId(int id) {
+    public MateriaEntity listarPorId(Long id) {
         return repository.findById(id).orElseThrow(() -> new MateriaNotFoundException(id));
     }
 
     @Override
-    public List<MateriaEntity> listarPorIdCurso(int id) {
+    public List<MateriaEntity> listarPorIdCurso(Long id) {
         return repository.findByIdCurso(id);
     }
 }

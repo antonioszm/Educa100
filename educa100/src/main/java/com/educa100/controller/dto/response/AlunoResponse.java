@@ -1,4 +1,4 @@
 package com.educa100.controller.dto.response;
 
-public record AlunoResponse(int id_aluno) {
+public record AlunoResponse(Long id_aluno) {
 }

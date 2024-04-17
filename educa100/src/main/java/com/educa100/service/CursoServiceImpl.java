@@ -18,18 +18,18 @@ public class CursoServiceImpl implements CursoService{
 
     @Override
     public CursoEntity salvar(CursoEntity curso) {
-        curso.setId(0);
+        curso.setId(null);
         return repository.save(curso);
     }
 
     @Override
-    public void atualizar(int id) {
+    public void atualizar(Long id) {
         CursoEntity curso = listarPorId(id);
         repository.update(curso.getId(),curso.getNome(),curso.getTurmas(), curso.getMaterias());
     }
 
     @Override
-    public void removerPorId(int id) {
+    public void removerPorId(Long id) {
         CursoEntity curso = listarPorId(id);
         repository.delete(curso);
     }
@@ -40,7 +40,7 @@ public class CursoServiceImpl implements CursoService{
     }
 
     @Override
-    public CursoEntity listarPorId(int id) {
+    public CursoEntity listarPorId(Long id) {
         return repository.findById(id).orElseThrow(() -> new CursoNotFoundException(id));
     }
 }

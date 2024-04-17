@@ -11,19 +11,19 @@ import java.util.Date;
 public class NotaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @OneToOne
     @JoinColumn(name = "id_aluno", nullable = false)
-    private int id_aluno;
+    private Long id_aluno;
 
     @OneToOne
     @JoinColumn(name = "id_professor", nullable = false)
-    private int id_professor;
+    private Long id_professor;
 
     @OneToOne
     @JoinColumn(name = "id_materia", nullable = false)
-    private int id_materia;
+    private Long id_materia;
 
     private double valor;
 

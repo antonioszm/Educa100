@@ -18,18 +18,18 @@ public class TurmaServiceImpl implements TurmaService{
 
     @Override
     public TurmaEntity salvar(TurmaEntity turma) {
-        turma.setId(0);
+        turma.setId(null);
         return repository.save(turma);
     }
 
     @Override
-    public void atualizar(int id) {
+    public void atualizar(Long id) {
         TurmaEntity turma = listarPorId(id);
         repository.update(turma.getId(),turma.getNome(), turma.getAlunos(), turma.getProfessor(), turma.getId_curso());
     }
 
     @Override
-    public void removerPorId(int id) {
+    public void removerPorId(Long id) {
         TurmaEntity turma = listarPorId(id);
         repository.delete(turma);
     }
@@ -40,7 +40,7 @@ public class TurmaServiceImpl implements TurmaService{
     }
 
     @Override
-    public TurmaEntity listarPorId(int id) {
+    public TurmaEntity listarPorId(Long id) {
         return repository.findById(id).orElseThrow(() -> new TurmaNotFoundException(id));
     }
 }

@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface TurmaService {
     public TurmaEntity salvar(TurmaEntity turma);
-    public void atualizar(int id);
-    public void removerPorId(int id);
+    public void atualizar(Long id);
+    public void removerPorId(Long id);
     public List<TurmaEntity> listarTodos();
-    public TurmaEntity listarPorId(int id);
+    public TurmaEntity listarPorId(Long id);
 }
