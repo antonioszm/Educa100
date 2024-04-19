@@ -5,6 +5,7 @@ import com.educa100.datasource.entity.PapelEntity;
 import com.educa100.datasource.entity.UsuarioEntity;
 import com.educa100.datasource.repository.PapelRepository;
 import com.educa100.datasource.repository.UsuarioRepository;
+import com.educa100.infra.exception.PapelNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,8 +43,26 @@ public class CadastroController {
         UsuarioEntity usuario = new UsuarioEntity();
         usuario.setLogin(usuarioRequest.login());
         usuario.setSenha(passwordEncoder.encode(usuarioRequest.senha()));
-        PapelEntity papel = papelRepository.findById(usuarioRequest.papel().getId())
-                .orElseThrow(() -> new Exception("Papel não encontrado"));
+
+
+        PapelEntity papel = papelRepository.findById(usuarioRequest.id_papel())
+                .orElseThrow(() -> new PapelNotFoundException(usuarioRequest.id_papel()));
+        if (papel == null){
+            papel = new PapelEntity();
+            Long papelId = usuarioRequest.id_papel();
+            papel.setId(papelId);
+            if (papelId == 1) {
+                papel.setNome("adm");
+            } else if (papelId == 2) {
+                papel.setNome("pedagogico");
+            } else if (papelId == 3) {
+                papel.setNome("recruiter");
+            } else if (papelId == 4) {
+                papel.setNome("professor");
+            } else if (papelId == 5) {
+                papel.setNome("aluno");
+            }
+        }
 
         usuario.setId_papel(papel);
 
