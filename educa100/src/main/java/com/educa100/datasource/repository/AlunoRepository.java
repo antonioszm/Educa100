@@ -19,7 +19,7 @@ public interface AlunoRepository extends JpaRepository<AlunoEntity, Long> {
 
     @Modifying
     @Transactional
-    @Query("UPDATE AlunoEntity a SET a.nome = :nome, a.dataNascimento = :dataNascimento, a.usuario = :usuario, a.turma = :turma WHERE a.id = :id")
+    @Query("UPDATE AlunoEntity a SET a.nome = :nome, a.data_nascimento = :data_nascimento, a.id_usuario = :id_usuario, a.id_turma = :id_turma WHERE a.id = :id")
     void update(@Param("id") Long id,
                 @Param("nome") String nome,
                 @Param("data_nascimento") LocalDate data_nascimento,

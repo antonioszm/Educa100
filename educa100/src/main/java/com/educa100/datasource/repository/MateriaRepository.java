@@ -18,7 +18,7 @@ public interface MateriaRepository extends JpaRepository<MateriaEntity, Long> {
 
     @Modifying
     @Transactional
-    @Query("UPDATE MateriaEntity m SET m.nome = :nome, m.curso = :curso WHERE m.id = :id")
+    @Query("UPDATE MateriaEntity m SET m.nome = :nome, m.id_curso = :id_curso WHERE m.id = :id")
     void update(@Param("id") Long id,
                 @Param("nome") String nome,
                  @Param("id_curso") CursoEntity id_curso
