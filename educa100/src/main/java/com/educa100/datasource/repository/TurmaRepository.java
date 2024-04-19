@@ -15,7 +15,7 @@ public interface TurmaRepository extends JpaRepository<TurmaEntity, Long> {
 
     @Modifying
     @Transactional
-    @Query("UPDATE TurmaEntity t SET t.nome = :nome, t.alunos = :alunos, t.professor = :professor, t.curso = :curso WHERE t.id = :id")
+    @Query("UPDATE TurmaEntity t SET t.nome = :nome, t.alunos = :alunos, t.professor = :professor, t.id_curso = :id_curso WHERE t.id = :id")
     void update(@Param("id") Long id,
                 @Param("nome") String nome,
                 @Param("alunos") List<AlunoEntity> alunos,
