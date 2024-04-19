@@ -20,7 +20,7 @@ public interface NotaRepository extends JpaRepository<NotaEntity, Long> {
 
     @Modifying
     @Transactional
-    @Query(value = "UPDATE Nota SET id_aluno = :id_aluno, id_professor = :id_professor, id_materia = :id_materia, valor = :valor, data = :data, WHERE id = :id", nativeQuery = true)
+    @Query("UPDATE NotaEntity n SET n.aluno = :aluno, n.professor = :professor, n.materia = :materia, n.valor = :valor, n.data = :data WHERE n.id = :id")
     void update(@Param("id") Long id,
                 @Param("id_aluno") AlunoEntity id_aluno,
                 @Param("id_professor") DocenteEntity id_professor,
