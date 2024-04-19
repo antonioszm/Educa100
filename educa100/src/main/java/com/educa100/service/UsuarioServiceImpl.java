@@ -2,6 +2,8 @@ package com.educa100.service;
 
 import com.educa100.datasource.entity.UsuarioEntity;
 import com.educa100.datasource.repository.UsuarioRepository;
+import com.educa100.infra.exception.TurmaNotFoundException;
+import com.educa100.infra.exception.UsuarioNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -22,7 +24,7 @@ public class UsuarioServiceImpl implements UsuarioService{
     }
 
     @Override
-    public Optional<UsuarioEntity> listarPorId(Long id) {
-        return repository.findById(id);
+    public UsuarioEntity listarPorId(Long id) {
+        return repository.findById(id).orElseThrow(() -> new UsuarioNotFoundException(id));
     }
 }
