@@ -7,5 +7,5 @@ import java.util.Optional;
 public interface UsuarioService {
     public UsuarioEntity salvar(UsuarioEntity usuario);
 
-    public Optional<UsuarioEntity> listarPorId(Long id);
+    public UsuarioEntity listarPorId(Long id);
 }
