@@ -51,7 +51,7 @@ public class DocenteController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DocenteEntity> atualizar(@PathVariable Long id, DocenteRequest request){
+    public ResponseEntity<DocenteEntity> atualizar(@PathVariable Long id,@RequestBody DocenteRequest request){
         DocenteEntity docente = service.listarPorId(id);
         Optional<UsuarioEntity> usuario = usuarioService.listarPorId(request.id_usuario());
         UsuarioEntity usuarioValido = null;
