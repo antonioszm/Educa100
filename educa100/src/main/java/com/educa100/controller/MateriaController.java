@@ -38,7 +38,7 @@ public class MateriaController {
 
 
     @PostMapping
-    public ResponseEntity<MateriaResponse> criarCursos(@RequestBody MateriaRequest request){
+    public ResponseEntity<MateriaResponse> criarMateria(@RequestBody MateriaRequest request){
 
         MateriaEntity materia = new MateriaEntity();
         materia.setNome(request.nome());
