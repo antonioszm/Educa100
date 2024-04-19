@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Repository
@@ -21,7 +22,7 @@ public interface AlunoRepository extends JpaRepository<AlunoEntity, Long> {
     @Query(value = "UPDATE Aluno SET nome = :nome, data_nascimento = :data_nascimento, id_usuario = :id_usuario, id_turma = :id_turma WHERE id = :id", nativeQuery = true)
     void update(@Param("id") Long id,
                 @Param("nome") String nome,
-                @Param("data_nascimento")Date data_nascimento,
+                @Param("data_nascimento") LocalDate data_nascimento,
                 @Param("id_usuario") UsuarioEntity id_usuario,
                 @Param("id_turma") TurmaEntity id_turma
     );

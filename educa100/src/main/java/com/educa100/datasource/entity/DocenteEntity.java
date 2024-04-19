@@ -5,6 +5,7 @@ import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -19,7 +20,7 @@ public class DocenteEntity {
     private String nome;
 
     @ColumnDefault(value = "CURRENT_TIMESTAMP")
-    private Date data_entrada;// = new Date();
+    private LocalDate data_entrada;// = new Date();
 
     @OneToOne
     @JoinColumn(name = "id_usuario", nullable = false, unique = true)

@@ -4,8 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
 
-import java.util.Date;
-
+import java.time.LocalDate;
 @Entity
 @Data
 @Table(name = "aluno")
@@ -17,7 +16,7 @@ public class AlunoEntity {
     @Column(unique = true)
     private String nome;
 
-    private Date data_nascimento;
+    private LocalDate data_nascimento;
 
     @OneToOne
     @JoinColumn(name = "id_usuario", nullable = false, unique = true)
