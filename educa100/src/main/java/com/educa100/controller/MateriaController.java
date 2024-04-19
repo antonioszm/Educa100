@@ -60,7 +60,7 @@ public class MateriaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MateriaEntity> atualizar(@PathVariable Long id, @RequestBody TurmaRequest request){
+    public ResponseEntity<MateriaEntity> atualizar(@PathVariable Long id, @RequestBody MateriaRequest request){
         MateriaEntity materia = service.listarPorId(id);
         materia.setNome(request.nome());
         Optional<CursoEntity> curso = Optional.ofNullable(cursoService.listarPorId(request.id_curso()));
