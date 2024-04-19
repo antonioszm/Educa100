@@ -3,6 +3,7 @@ package com.educa100.datasource.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -27,5 +28,5 @@ public class NotaEntity {
 
     private double valor;
 
-    private Date data;
+    private LocalDate data;
 }

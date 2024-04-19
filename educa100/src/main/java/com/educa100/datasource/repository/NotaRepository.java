@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public interface NotaRepository extends JpaRepository<NotaEntity, Long> {
                 @Param("id_professor") DocenteEntity id_professor,
                 @Param("id_materia") MateriaEntity id_materia,
                 @Param("valor") double valor,
-                @Param("data") Date data
+                @Param("data") LocalDate data
     );
 
     @Query("SELECT n FROM NotaEntity n WHERE n.id_aluno.id = :alunoId")
