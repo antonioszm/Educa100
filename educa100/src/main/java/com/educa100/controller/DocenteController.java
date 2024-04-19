@@ -32,7 +32,7 @@ public class DocenteController {
         DocenteEntity docente = new DocenteEntity();
         docente.setNome(request.nome());
         docente.setData_entrada(request.dataEntrada());
-        Optional<UsuarioEntity> usuario = usuarioService.listarPorId(request.id_usuario());
+        Optional<UsuarioEntity> usuario = Optional.ofNullable(usuarioService.listarPorId(request.id_usuario()));
         UsuarioEntity usuarioValido = null;
         if (usuario.isPresent()){
             usuarioValido = usuario.get();
@@ -53,7 +53,7 @@ public class DocenteController {
     @PutMapping("/{id}")
     public ResponseEntity<DocenteEntity> atualizar(@PathVariable Long id,@RequestBody DocenteRequest request){
         DocenteEntity docente = service.listarPorId(id);
-        Optional<UsuarioEntity> usuario = usuarioService.listarPorId(request.id_usuario());
+        Optional<UsuarioEntity> usuario = Optional.ofNullable(usuarioService.listarPorId(request.id_usuario()));
         UsuarioEntity usuarioValido = null;
         if (usuario.isPresent()){
             usuarioValido = usuario.get();
