@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/turma")
+@RequestMapping("/turmas")
 public class TurmaController {
 
     private final TurmaServiceImpl service;
