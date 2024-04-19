@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/docente")
+@RequestMapping("/docentes")
 public class DocenteController {
 
     private final DocenteServiceImpl service;
