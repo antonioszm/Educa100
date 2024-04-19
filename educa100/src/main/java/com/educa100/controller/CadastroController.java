@@ -47,23 +47,6 @@ public class CadastroController {
 
         PapelEntity papel = papelRepository.findById(usuarioRequest.id_papel())
                 .orElseThrow(() -> new PapelNotFoundException(usuarioRequest.id_papel()));
-        if (papel == null){
-            papel = new PapelEntity();
-            Long papelId = usuarioRequest.id_papel();
-            papel.setId(papelId);
-            if (papelId == 1) {
-                papel.setNome("adm");
-            } else if (papelId == 2) {
-                papel.setNome("pedagogico");
-            } else if (papelId == 3) {
-                papel.setNome("recruiter");
-            } else if (papelId == 4) {
-                papel.setNome("professor");
-            } else if (papelId == 5) {
-                papel.setNome("aluno");
-            }
-        }
-
         usuario.setId_papel(papel);
 
         usuarioRepository.save(usuario);
