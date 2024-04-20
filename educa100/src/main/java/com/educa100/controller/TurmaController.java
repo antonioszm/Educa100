@@ -5,10 +5,10 @@ import com.educa100.controller.dto.request.TurmaRequest;
 import com.educa100.controller.dto.response.TurmaResponse;
 import com.educa100.datasource.entity.CursoEntity;
 import com.educa100.datasource.entity.DocenteEntity;
+import com.educa100.datasource.entity.NotaEntity;
 import com.educa100.datasource.entity.TurmaEntity;
-import com.educa100.service.CursoServiceImpl;
-import com.educa100.service.DocenteServiceImpl;
-import com.educa100.service.TurmaServiceImpl;
+import com.educa100.infra.exception.AlunoNotFoundException;
+import com.educa100.service.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,10 +27,16 @@ public class TurmaController {
 
     private final CursoServiceImpl cursoService;
 
-    public TurmaController(TurmaServiceImpl service, DocenteServiceImpl docenteService, CursoServiceImpl cursoService) {
+    private final AlunoServiceImpl alunoService;
+
+    private final NotaServiceImpl notaService;
+
+    public TurmaController(TurmaServiceImpl service, DocenteServiceImpl docenteService, CursoServiceImpl cursoService, AlunoServiceImpl alunoService, NotaServiceImpl notaService) {
         this.service = service;
         this.docenteService = docenteService;
         this.cursoService = cursoService;
+        this.alunoService = alunoService;
+        this.notaService = notaService;
     }
 
     @PostMapping
@@ -96,5 +102,19 @@ public class TurmaController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(listaTurmas);
+    }
+
+    @GetMapping("/aluno/{id}/pontuacao")
+    public ResponseEntity<Double> listarTodos(@PathVariable Long id){
+        List<NotaEntity> listaNotas = notaService.listarPorIdAluno(id);
+        if (alunoService.listarPorId(id) == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        int numeroDeMaterias = alunoService.listarPorId(id).getId_turma().getId_curso().getMaterias().size();
+        double pontuacao = 0;
+        for (NotaEntity notas: listaNotas){
+            pontuacao += notas.getValor();
+        }
+        return ResponseEntity.ok(pontuacao/numeroDeMaterias);
     }
 }
