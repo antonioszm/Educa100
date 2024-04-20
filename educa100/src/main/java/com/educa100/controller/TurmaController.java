@@ -105,7 +105,7 @@ public class TurmaController {
     }
 
     @GetMapping("/aluno/{id}/pontuacao")
-    public ResponseEntity<Double> listarTodos(@PathVariable Long id){
+    public ResponseEntity<Double> getPontuacao(@PathVariable Long id){
         List<NotaEntity> listaNotas = notaService.listarPorIdAluno(id);
         if (alunoService.listarPorId(id) == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -115,6 +115,6 @@ public class TurmaController {
         for (NotaEntity notas: listaNotas){
             pontuacao += notas.getValor();
         }
-        return ResponseEntity.ok(pontuacao/numeroDeMaterias);
+        return ResponseEntity.ok((pontuacao/numeroDeMaterias)*10);
     }
 }
