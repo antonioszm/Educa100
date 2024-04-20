@@ -124,7 +124,7 @@ public class NotasController {
     }
 
     @GetMapping("alunos/{id_aluno}/notas")
-    public ResponseEntity<List<NotaEntity>> listaCursoId(@PathVariable Long id_aluno){
+    public ResponseEntity<List<NotaEntity>> listaAlunoId(@PathVariable Long id_aluno){
         List<NotaEntity> listaNotas = service.listarPorIdAluno(id_aluno);
         if (listaNotas.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
