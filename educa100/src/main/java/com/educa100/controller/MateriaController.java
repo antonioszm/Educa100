@@ -3,18 +3,19 @@ package com.educa100.controller;
 import com.educa100.controller.dto.request.CursoRequest;
 import com.educa100.controller.dto.request.MateriaRequest;
 import com.educa100.controller.dto.request.TurmaRequest;
+import com.educa100.controller.dto.response.AlunoResponse;
 import com.educa100.controller.dto.response.CursoResponse;
 import com.educa100.controller.dto.response.MateriaResponse;
-import com.educa100.datasource.entity.CursoEntity;
-import com.educa100.datasource.entity.MateriaEntity;
-import com.educa100.datasource.entity.TurmaEntity;
-import com.educa100.datasource.entity.UsuarioEntity;
+import com.educa100.datasource.entity.*;
+import com.educa100.facade.MateriaFacade;
 import com.educa100.service.CursoServiceImpl;
 import com.educa100.service.MateriaService;
 import com.educa100.service.MateriaServiceImpl;
 import com.educa100.service.TurmaServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -24,76 +25,49 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/materias")
+@Slf4j
 public class MateriaController {
 
-    private final MateriaServiceImpl service;
+    private final MateriaFacade facade;
 
-    private final CursoServiceImpl cursoService;
-
-
-    public MateriaController(MateriaServiceImpl service, CursoServiceImpl cursoService) {
-        this.service = service;
-        this.cursoService = cursoService;
+    public MateriaController(MateriaFacade facade) {
+        this.facade = facade;
     }
 
 
     @PostMapping
-    public ResponseEntity<MateriaResponse> criarMateria(@RequestBody MateriaRequest request){
-
-        MateriaEntity materia = new MateriaEntity();
-        materia.setNome(request.nome());
-        Optional<CursoEntity> curso = Optional.ofNullable(cursoService.listarPorId(request.id_curso()));
-        CursoEntity cursoValido = null;
-        if (curso.isPresent()){
-            cursoValido = curso.get();
-        }
-        materia.setId_curso(cursoValido);
-        service.salvar(materia);
-
+    public ResponseEntity<MateriaResponse> criarMateria(@RequestBody MateriaRequest request, JwtAuthenticationToken jwt){
+        MateriaEntity materia = facade.criarMateria(request, jwt);
+        log.info("Materia cirado com sucesso!");
         return ResponseEntity.created(null).body(new MateriaResponse(materia.getId()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MateriaEntity> listarPorId(@PathVariable Long id){
-        MateriaEntity materia = service.listarPorId(id);
+    public ResponseEntity<MateriaEntity> listarPorId(@PathVariable Long id,JwtAuthenticationToken jwt){
+        log.info("Materia com {id} foi listado" + id);
+        MateriaEntity materia = facade.listarPorId(id, jwt);
+
         return ResponseEntity.ok(materia);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MateriaEntity> atualizar(@PathVariable Long id, @RequestBody MateriaRequest request){
-        MateriaEntity materia = service.listarPorId(id);
-        materia.setNome(request.nome());
-        Optional<CursoEntity> curso = Optional.ofNullable(cursoService.listarPorId(request.id_curso()));
-        CursoEntity cursoValido = null;
-        if (curso.isPresent()){
-            cursoValido = curso.get();
-        }
-        materia.setId_curso(cursoValido);
-        service.atualizar(materia.getId());
+    public ResponseEntity<MateriaEntity> atualizar(@PathVariable Long id, @RequestBody MateriaRequest request,JwtAuthenticationToken jwt){
+        MateriaEntity materia = facade.atualizar(id, request, jwt);
+        log.info("Materia atualizado com sucesso!");
         return ResponseEntity.ok(materia);
     }
 
     @DeleteMapping("/{id}")
-    public void deletar(@PathVariable Long id){
-        service.removerPorId(id);
+    public void deletar(@PathVariable Long id,JwtAuthenticationToken jwt){
+        facade.deletar(id, jwt);
+        log.info("Materia deletada com sucesso!");
         throw new ResponseStatusException(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping
-    public ResponseEntity<List<MateriaEntity>> listarTodos(){
-        List<MateriaEntity> listaMaterias = service.listarTodos();
-        if (listaMaterias.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        return ResponseEntity.ok(listaMaterias);
-    }
-
-    @GetMapping("cursos/{id_curso}/materias")
-    public ResponseEntity<List<MateriaEntity>> listaCursoId(@PathVariable Long id){
-        List<MateriaEntity> listaMaterias = service.listarPorIdCurso(id);
-        if (listaMaterias.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        return ResponseEntity.ok(listaMaterias);
+    public ResponseEntity<List<MateriaEntity>> listarTodos(JwtAuthenticationToken jwt){
+        List<MateriaEntity> listaDeMateria = facade.listarTodos(jwt);
+        log.info("Todas as Materias listadas com sucesso!");
+        return ResponseEntity.ok(listaDeMateria);
     }
 }
