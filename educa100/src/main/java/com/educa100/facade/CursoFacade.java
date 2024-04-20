@@ -6,9 +6,11 @@ import com.educa100.controller.dto.response.CursoResponse;
 import com.educa100.datasource.entity.CursoEntity;
 import com.educa100.datasource.entity.MateriaEntity;
 import com.educa100.datasource.entity.TurmaEntity;
+import com.educa100.datasource.entity.UsuarioEntity;
 import com.educa100.service.CursoServiceImpl;
 import com.educa100.service.MateriaServiceImpl;
 import com.educa100.service.TurmaServiceImpl;
+import com.educa100.service.UsuarioServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,14 +31,19 @@ public class CursoFacade {
     private final TurmaServiceImpl turmaService;
 
     private final MateriaServiceImpl materiaService;
+    private final UsuarioServiceImpl usuarioService;
 
-    public CursoFacade(CursoServiceImpl service, TurmaServiceImpl turmaService, MateriaServiceImpl materiaService) {
+    public CursoFacade(CursoServiceImpl service, TurmaServiceImpl turmaService, MateriaServiceImpl materiaService, UsuarioServiceImpl usuarioService) {
         this.service = service;
         this.turmaService = turmaService;
         this.materiaService = materiaService;
+        this.usuarioService = usuarioService;
     }
     public CursoEntity criarCursos(@RequestBody CursoRequest request, JwtAuthenticationToken jwt){
-
+        UsuarioEntity usuarioLogado = usuarioService.listarPorId(Long.valueOf(jwt.getName()));
+        if (usuarioLogado.getId_papel().getId() != 1){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores podem cirar cursos");
+        }
         CursoEntity curso = new CursoEntity();
         if (!request.nome().isBlank()){
             curso.setNome(request.nome());
@@ -65,11 +72,19 @@ public class CursoFacade {
     }
 
     public CursoEntity listarPorId(Long id, JwtAuthenticationToken jwt){
+        UsuarioEntity usuarioLogado = usuarioService.listarPorId(Long.valueOf(jwt.getName()));
+        if (usuarioLogado.getId_papel().getId() == 5){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores ou  Docentes podem listar cursos");
+        }
         CursoEntity curso = service.listarPorId(id);
         return curso;
     }
 
     public CursoEntity atualizar(Long id, TurmaRequest request, JwtAuthenticationToken jwt){
+        UsuarioEntity usuarioLogado = usuarioService.listarPorId(Long.valueOf(jwt.getName()));
+        if (usuarioLogado.getId_papel().getId() == 5){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores ou  Docentes podem listar cursos");
+        }
         CursoEntity curso = service.listarPorId(id);
         if (!request.nome().isBlank()){
             curso.setNome(request.nome());
@@ -96,16 +111,32 @@ public class CursoFacade {
         service.atualizar(curso.getId());
         return curso;
     }
-    public void deletar(Long id){
+    public void deletar(Long id, JwtAuthenticationToken jwt){
+        UsuarioEntity usuarioLogado = usuarioService.listarPorId(Long.valueOf(jwt.getName()));
+        if (usuarioLogado.getId_papel().getId() != 1){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores podem deletar cursos");
+        }
         service.removerPorId(id);
         throw new ResponseStatusException(HttpStatus.NO_CONTENT);
     }
 
-    public ResponseEntity<List<CursoEntity>> listarTodos(JwtAuthenticationToken jwt){
+    public List<CursoEntity> listarTodos(JwtAuthenticationToken jwt){
+        UsuarioEntity usuarioLogado = usuarioService.listarPorId(Long.valueOf(jwt.getName()));
+        if (usuarioLogado.getId_papel().getId() == 5){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores ou  Docentes podem listar cursos");
+        }
         List<CursoEntity> listaCursos = service.listarTodos();
         if (listaCursos.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Não ha cursos para listar");
         }
-        return ResponseEntity.ok(listaCursos);
+        return listaCursos;
+    }
+
+    public List<MateriaEntity> listaCursoId(@PathVariable Long id){
+        List<MateriaEntity> listaMaterias = materiaService.listarPorIdCurso(id);
+        if (listaMaterias.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Não ha materias no curso para listar");
+        }
+        return listaMaterias;
     }
 }
