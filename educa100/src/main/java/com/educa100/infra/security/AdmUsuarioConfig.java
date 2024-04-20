@@ -6,8 +6,10 @@ import com.educa100.datasource.repository.PapelRepository;
 import com.educa100.datasource.repository.UsuarioRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+@Configuration
 public class AdmUsuarioConfig implements CommandLineRunner {
 
     private PapelRepository papelRepository;
@@ -23,7 +25,10 @@ public class AdmUsuarioConfig implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) throws Exception {
-        var papelAdm = papelRepository.findByNome(PapelEntity.Papel.ADM.name());
+        PapelEntity papelAdm = new PapelEntity();
+        papelAdm.setNome(PapelEntity.Papel.ADM.name());
+        papelRepository.save(papelAdm);
+        System.out.println("Papel ADM criado e salvo com sucesso.");
 
         var usuarioAdm = usuarioRepository.findByLogin("adm");
         usuarioAdm.ifPresentOrElse(
@@ -33,8 +38,9 @@ public class AdmUsuarioConfig implements CommandLineRunner {
                 () -> {
                     var usuario = new UsuarioEntity();
                     usuario.setLogin("adm");
-                    usuario.setSenha(bCryptPasswordEncoder.encode("1000"));
+                    usuario.setSenha(bCryptPasswordEncoder.encode("12345"));
                     usuario.setId_papel(papelAdm);
+                    usuarioRepository.save(usuario);
                 }
         );
     }
