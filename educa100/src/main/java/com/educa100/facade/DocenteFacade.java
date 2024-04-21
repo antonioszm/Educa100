@@ -30,7 +30,7 @@ public class DocenteFacade {
 
     public DocenteEntity criarDocente(DocenteRequest request, JwtAuthenticationToken jwt){
         UsuarioEntity usuarioLogado = usuarioService.listarPorId(Long.valueOf(jwt.getName()));
-        if (usuarioLogado.getId_papel().equals(5)){
+        if (usuarioLogado.getId_papel().getId() == 5){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores ou docentes podem criar docentes");
         }
         DocenteEntity docente = new DocenteEntity();
@@ -51,7 +51,7 @@ public class DocenteFacade {
             log.error("Usuario é nullo");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-        if (!usuarioLogado.getId_papel().equals(1) && !usuarioValido.getId_papel().equals(usuarioLogado.getId_papel())){
+        if (usuarioLogado.getId_papel().getId() != 1 && !usuarioValido.getId_papel().equals(usuarioLogado.getId_papel())){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO,você so pode cadastrar você mesmo");
         }
         docente.setId_usuario(usuarioValido);
@@ -63,11 +63,11 @@ public class DocenteFacade {
 
     public DocenteEntity listarPorId(Long id, JwtAuthenticationToken jwt){
         UsuarioEntity usuarioLogado = usuarioService.listarPorId(Long.valueOf(jwt.getName()));
-        if (usuarioLogado.getId_papel().equals(5)){
+        if (usuarioLogado.getId_papel().getId() == 5){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores ou docentes podem listar docentes");
         }
         DocenteEntity docente = service.listarPorId(id);
-        if (!usuarioLogado.getId_papel().equals(1) || docente.getId_usuario().equals(usuarioLogado.getId())){
+        if (usuarioLogado.getId_papel().getId() != 1 || docente.getId_usuario().equals(usuarioLogado.getId())){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores ou o próprio docente podem se listar");
         }
         return docente;
@@ -75,11 +75,11 @@ public class DocenteFacade {
 
     public DocenteEntity atualizar( Long id, DocenteRequest request, JwtAuthenticationToken jwt){
         UsuarioEntity usuarioLogado = usuarioService.listarPorId(Long.valueOf(jwt.getName()));
-        if (usuarioLogado.getId_papel().equals(5)){
+        if (usuarioLogado.getId_papel().getId() == 5){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores ou docentes podem atualizar docentes");
         }
         DocenteEntity docente = service.listarPorId(id);
-        if (!usuarioLogado.getId_papel().equals(1) || docente.getId_usuario().equals(usuarioLogado.getId())){
+        if (usuarioLogado.getId_papel().getId() != 1 || docente.getId_usuario().equals(usuarioLogado.getId())){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores ou o próprio docente podem atualizar docentes");
         }
         Optional<UsuarioEntity> usuario = Optional.ofNullable(usuarioService.listarPorId(request.id_usuario()));
@@ -104,7 +104,7 @@ public class DocenteFacade {
 
     public void deletar(Long id,JwtAuthenticationToken jwt){
         UsuarioEntity usuarioLogado = usuarioService.listarPorId(Long.valueOf(jwt.getName()));
-        if (!usuarioLogado.getId_papel().equals(1)){
+        if (usuarioLogado.getId_papel().getId() != 5){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores podem deletar docentes");
         }
         service.removerPorId(id);
@@ -113,7 +113,7 @@ public class DocenteFacade {
 
     public List<DocenteEntity> listarTodos(JwtAuthenticationToken jwt){
         UsuarioEntity usuarioLogado = usuarioService.listarPorId(Long.valueOf(jwt.getName()));
-        if (usuarioLogado.getId_papel().equals(1)) {
+        if (usuarioLogado.getId_papel().getId() == 1) {
             List<DocenteEntity> listaDocentes = service.listarTodos();
             if (listaDocentes.isEmpty()) {
                 log.info("Não ha docentes para serem listados");
