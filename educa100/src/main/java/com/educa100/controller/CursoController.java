@@ -55,6 +55,13 @@ public class CursoController {
         return ResponseEntity.ok(listaDeCursos);
     }
 
+    @DeleteMapping("/{id}")
+    public void deletar(@PathVariable Long id,JwtAuthenticationToken jwt) throws Exception {
+        facade.deletar(id, jwt);
+        log.info("Curso deletado com sucesso!");
+        throw new ResponseStatusException(HttpStatus.NO_CONTENT);
+    }
+
     @GetMapping("/{id_curso}/materias")
     public ResponseEntity<List<MateriaEntity>> listaCursoId(@PathVariable Long id){
         List<MateriaEntity> listaMaterias = facade.listaCursoId(id);

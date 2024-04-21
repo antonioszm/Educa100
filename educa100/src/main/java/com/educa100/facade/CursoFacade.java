@@ -39,7 +39,7 @@ public class CursoFacade {
         this.materiaService = materiaService;
         this.usuarioService = usuarioService;
     }
-    public CursoEntity criarCursos(@RequestBody CursoRequest request, JwtAuthenticationToken jwt){
+    public CursoEntity criarCursos(CursoRequest request, JwtAuthenticationToken jwt){
         UsuarioEntity usuarioLogado = usuarioService.listarPorId(Long.valueOf(jwt.getName()));
         if (usuarioLogado.getId_papel().getId() != 1){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores podem cirar cursos");
@@ -132,7 +132,7 @@ public class CursoFacade {
         return listaCursos;
     }
 
-    public List<MateriaEntity> listaCursoId(@PathVariable Long id){
+    public List<MateriaEntity> listaCursoId(Long id){
         List<MateriaEntity> listaMaterias = materiaService.listarPorIdCurso(id);
         if (listaMaterias.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Não ha materias no curso para listar");
