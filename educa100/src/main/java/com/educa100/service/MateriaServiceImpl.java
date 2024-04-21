@@ -3,11 +3,13 @@ package com.educa100.service;
 import com.educa100.datasource.entity.MateriaEntity;
 import com.educa100.datasource.repository.MateriaRepository;
 import com.educa100.infra.exception.MateriaNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Slf4j
 public class MateriaServiceImpl implements MateriaService{
 
     private final MateriaRepository repository;
@@ -41,7 +43,12 @@ public class MateriaServiceImpl implements MateriaService{
 
     @Override
     public MateriaEntity listarPorId(Long id) {
-        return repository.findById(id).orElseThrow(() -> new MateriaNotFoundException(id));
+        try {
+            return repository.findById(id).orElseThrow(() -> new MateriaNotFoundException(id));
+        } catch (MateriaNotFoundException e){
+            log.error("Erro: {}",  e.getMessage());
+            throw e;
+        }
     }
 
     @Override

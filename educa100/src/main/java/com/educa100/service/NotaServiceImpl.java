@@ -5,12 +5,14 @@ import com.educa100.datasource.entity.NotaEntity;
 import com.educa100.datasource.entity.TurmaEntity;
 import com.educa100.datasource.repository.NotaRepository;
 import com.educa100.infra.exception.NotaNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class NotaServiceImpl implements NotaService{
 
     private final NotaRepository repository;
@@ -48,6 +50,11 @@ public class NotaServiceImpl implements NotaService{
 
     @Override
     public NotaEntity listarPorId(Long id) {
-        return repository.findById(id).orElseThrow(() -> new NotaNotFoundException(id));
+        try {
+            return repository.findById(id).orElseThrow(() -> new NotaNotFoundException(id));
+        } catch (NotaNotFoundException e){
+            log.error("Erro: {}",  e.getMessage());
+            throw e;
+        }
     }
 }
