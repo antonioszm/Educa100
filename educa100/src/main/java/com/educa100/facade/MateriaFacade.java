@@ -39,7 +39,14 @@ public class MateriaFacade {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores criar Materias");
         }
         MateriaEntity materia = new MateriaEntity();
-        if (!request.nome().isBlank()){
+        boolean nomeEmUso = false;
+        List<MateriaEntity> materias = service.listarTodos();
+        for (MateriaEntity m : materias){
+            if (m.getNome().equals(request.nome())){
+                nomeEmUso = true;
+            }
+        }
+        if (!request.nome().isBlank() && !nomeEmUso){
             materia.setNome(request.nome());
         } else {
             log.error("Nome Invalido");
@@ -71,8 +78,14 @@ public class MateriaFacade {
         }
 
         MateriaEntity materia = service.listarPorId(id);
-
-        if (!request.nome().isBlank()){
+        boolean nomeEmUso = false;
+        List<MateriaEntity> materias = service.listarTodos();
+        for (MateriaEntity m : materias){
+            if (m.getNome().equals(request.nome())){
+                nomeEmUso = true;
+            }
+        }
+        if (!request.nome().isBlank() && !nomeEmUso){
             materia.setNome(request.nome());
         } else {
             log.error("Nome Invalido");

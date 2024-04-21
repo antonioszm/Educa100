@@ -48,7 +48,14 @@ public class TurmaFacade {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores podem criar turmas");
         }
         TurmaEntity turma = new TurmaEntity();
-        if (!request.nome().isBlank()){
+        boolean nomeEmUso = false;
+        List<TurmaEntity> turmas = service.listarTodos();
+        for (TurmaEntity t : turmas){
+            if (t.getNome().equals(request.nome())){
+                nomeEmUso = true;
+            }
+        }
+        if (!request.nome().isBlank() && !nomeEmUso){
             turma.setNome(request.nome());
         } else {
             log.error("Nome Invalido");
@@ -136,7 +143,14 @@ public class TurmaFacade {
             }
         }
         turma.setAlunos(listaDeAlunos);
-        if (!request.nome().isBlank()){
+        boolean nomeEmUso = false;
+        List<TurmaEntity> turmas = service.listarTodos();
+        for (TurmaEntity t : turmas){
+            if (t.getNome().equals(request.nome())){
+                nomeEmUso = true;
+            }
+        }
+        if (!request.nome().isBlank() && !nomeEmUso){
             turma.setNome(request.nome());
         } else {
             log.error("Nome Invalido");
