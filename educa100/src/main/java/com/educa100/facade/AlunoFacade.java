@@ -110,7 +110,12 @@ public final class AlunoFacade {
         if (turma.isPresent()){
             turmaValida = turma.get();
         }
-        aluno.setNome(request.nome());
+        if (!request.nome().isBlank()){
+            aluno.setNome(request.nome());
+        } else {
+            log.error("Nome Invalido");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nome é invalido");
+        }
         aluno.setData_nascimento(request.dataNascimento());
         aluno.setId_usuario(usuarioValido);
         aluno.setId_turma(turmaValida);
