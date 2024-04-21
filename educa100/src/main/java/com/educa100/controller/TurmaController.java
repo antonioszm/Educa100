@@ -2,15 +2,16 @@ package com.educa100.controller;
 
 import com.educa100.controller.dto.request.DocenteRequest;
 import com.educa100.controller.dto.request.TurmaRequest;
+import com.educa100.controller.dto.response.AlunoResponse;
 import com.educa100.controller.dto.response.TurmaResponse;
-import com.educa100.datasource.entity.CursoEntity;
-import com.educa100.datasource.entity.DocenteEntity;
-import com.educa100.datasource.entity.NotaEntity;
-import com.educa100.datasource.entity.TurmaEntity;
+import com.educa100.datasource.entity.*;
+import com.educa100.facade.TurmaFacade;
 import com.educa100.infra.exception.AlunoNotFoundException;
 import com.educa100.service.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -19,102 +20,48 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/turmas")
+@Slf4j
 public class TurmaController {
 
-    private final TurmaServiceImpl service;
+    private final TurmaFacade facade;
 
-    private final DocenteServiceImpl docenteService;
-
-    private final CursoServiceImpl cursoService;
-
-    private final AlunoServiceImpl alunoService;
-
-    private final NotaServiceImpl notaService;
-
-    public TurmaController(TurmaServiceImpl service, DocenteServiceImpl docenteService, CursoServiceImpl cursoService, AlunoServiceImpl alunoService, NotaServiceImpl notaService) {
-        this.service = service;
-        this.docenteService = docenteService;
-        this.cursoService = cursoService;
-        this.alunoService = alunoService;
-        this.notaService = notaService;
+    public TurmaController(TurmaFacade facade) {
+        this.facade = facade;
     }
 
     @PostMapping
-    public ResponseEntity<TurmaResponse> criarTurma(@RequestBody TurmaRequest request){
-
-        TurmaEntity turma = new TurmaEntity();
-        turma.setNome(request.nome());
-        turma.setAlunos(request.alunos());
-        Optional<DocenteEntity> docente = Optional.ofNullable(docenteService.listarPorId(request.id_professor()));
-        DocenteEntity docenteValido = null;
-        if (docente.isPresent()){
-            docenteValido = docente.get();
-        }
-        turma.setProfessor(docenteValido);
-        Optional<CursoEntity> curso = Optional.ofNullable(cursoService.listarPorId(request.id_curso()));
-        CursoEntity cursoValido = null;
-        if (curso.isPresent()){
-            cursoValido = curso.get();
-        }
-        turma.setId_curso(cursoValido);
-        service.salvar(turma);
-
+    public ResponseEntity<TurmaResponse> criarTurma(@RequestBody TurmaRequest request, JwtAuthenticationToken jwt){
+        TurmaEntity turma = facade.criarTurma(request, jwt);
+        log.info("Turma cirado com sucesso!");
         return ResponseEntity.created(null).body(new TurmaResponse(turma.getId()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TurmaEntity> listarPorId(@PathVariable Long id){
-        TurmaEntity turma = service.listarPorId(id);
+    public ResponseEntity<TurmaEntity> listarPorId(@PathVariable Long id, JwtAuthenticationToken jwt){
+        log.info("Turma com {id} foi listado" + id);
+        TurmaEntity turma = facade.listarPorId(id, jwt);
+
         return ResponseEntity.ok(turma);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TurmaEntity> atualizar(@PathVariable Long id, @RequestBody TurmaRequest request){
-        TurmaEntity turma = service.listarPorId(id);
-        Optional<DocenteEntity> docente = Optional.ofNullable(docenteService.listarPorId(request.id_professor()));
-        DocenteEntity docenteValido = null;
-        if (docente.isPresent()){
-            docenteValido = docente.get();
-        }
-        Optional<CursoEntity> curso = Optional.ofNullable(cursoService.listarPorId(request.id_curso()));
-        CursoEntity cursoValido = null;
-        if (curso.isPresent()){
-            cursoValido = curso.get();
-        }
-        turma.setId_curso(cursoValido);
-        turma.setProfessor(docenteValido);
-        turma.setAlunos(request.alunos());
-        turma.setNome(request.nome());
-        service.atualizar(turma.getId());
+    public ResponseEntity<TurmaEntity> atualizar(@PathVariable Long id, @RequestBody TurmaRequest request, JwtAuthenticationToken jwt){
+        TurmaEntity turma = facade.atualizar(id, request, jwt);
+        log.info("Turma atualizado com sucesso!");
         return ResponseEntity.ok(turma);
     }
 
     @DeleteMapping("/{id}")
-    public void deletar(@PathVariable Long id){
-        service.removerPorId(id);
+    public void deletar(@PathVariable Long id, JwtAuthenticationToken jwt){
+        facade.deletar(id, jwt);
+        log.info("Turma deletado com sucesso!");
         throw new ResponseStatusException(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping
-    public ResponseEntity<List<TurmaEntity>> listarTodos(){
-        List<TurmaEntity> listaTurmas = service.listarTodos();
-        if (listaTurmas.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        return ResponseEntity.ok(listaTurmas);
-    }
-
-    @GetMapping("/aluno/{id}/pontuacao")
-    public ResponseEntity<Double> getPontuacao(@PathVariable Long id){
-        List<NotaEntity> listaNotas = notaService.listarPorIdAluno(id);
-        if (alunoService.listarPorId(id) == null){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        int numeroDeMaterias = alunoService.listarPorId(id).getId_turma().getId_curso().getMaterias().size();
-        double pontuacao = 0;
-        for (NotaEntity notas: listaNotas){
-            pontuacao += notas.getValor();
-        }
-        return ResponseEntity.ok((pontuacao/numeroDeMaterias)*10);
+    public ResponseEntity<List<TurmaEntity>> listarTodos(JwtAuthenticationToken jwt){
+        List<TurmaEntity> listaDeTurmas = facade.listarTodos(jwt);
+        log.info("Todos os alunos listados com sucesso!");
+        return ResponseEntity.ok(listaDeTurmas);
     }
 }
