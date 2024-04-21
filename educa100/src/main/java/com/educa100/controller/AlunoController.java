@@ -61,6 +61,7 @@ public class AlunoController {
         log.info("Todos os alunos listados com sucesso!");
         return ResponseEntity.ok(listaDeAlunos);
     }
+    @GetMapping("/{id}/pontuacao")
     public ResponseEntity<Double> getPontuacao(Long id,JwtAuthenticationToken jwt){
         log.info("Pontuação do aluno com id " +id);
         return ResponseEntity.ok(facade.getPontuacao(id, jwt));
