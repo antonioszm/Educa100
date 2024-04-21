@@ -131,6 +131,9 @@ public final class AlunoFacade {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nome é invalido");
         }
         aluno.setData_nascimento(request.dataNascimento());
+        if (!request.id_usuario().equals(usuarioValido.getId())){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Você não pode modificar o id de usuario de um aluno já cadastrado");
+        }
         aluno.setId_usuario(usuarioValido);
         aluno.setId_turma(turmaValida);
         service.atualizar(aluno.getId());

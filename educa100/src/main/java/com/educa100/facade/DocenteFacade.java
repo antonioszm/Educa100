@@ -93,11 +93,10 @@ public class DocenteFacade {
         UsuarioEntity usuarioValido = null;
         if (usuario.isPresent()){
             usuarioValido = usuario.get();
-        }else{
-            log.error("Usuario é nullo");
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-        docente.setId_usuario(usuarioValido);
+        if (usuarioLogado.getId_papel().getId() != 1  && !usuarioValido.getId_papel().equals(usuarioLogado.getId_papel())){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, você so pode atualizar você mesmo");
+        }
         boolean nomeEmUso = false;
         List<DocenteEntity> docentes = service.listarTodos();
         for (DocenteEntity d : docentes){
@@ -112,6 +111,7 @@ public class DocenteFacade {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
         docente.setData_entrada(request.dataEntrada());
+        docente.setId_usuario(usuarioValido);
         service.atualizar(docente.getId());
         return docente;
     }
