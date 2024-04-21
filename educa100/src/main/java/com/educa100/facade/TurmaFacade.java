@@ -11,6 +11,7 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,7 +54,14 @@ public class TurmaFacade {
             log.error("Nome Invalido");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nome é invalido");
         }
-        turma.setAlunos(request.alunos());
+        List<AlunoEntity> listaGeralDeAlunos = alunoService.listarTodos();
+        List<AlunoEntity> listaDeAlunos = new ArrayList<>();
+        for (AlunoEntity aluno : listaGeralDeAlunos){
+            if (aluno.getId_turma().getId().equals(turma.getId())){
+                listaDeAlunos.add(aluno);
+            }
+        }
+        turma.setAlunos(listaDeAlunos);
         Optional<DocenteEntity> docente = Optional.ofNullable(docenteService.listarPorId(request.id_professor()));
         DocenteEntity docenteValido = null;
         if (docente.isPresent()){
@@ -120,8 +128,20 @@ public class TurmaFacade {
         }
         turma.setId_curso(cursoValido);
         turma.setProfessor(docenteValido);
-        turma.setAlunos(request.alunos());
-        turma.setNome(request.nome());
+        List<AlunoEntity> listaGeralDeAlunos = alunoService.listarTodos();
+        List<AlunoEntity> listaDeAlunos = new ArrayList<>();
+        for (AlunoEntity aluno : listaGeralDeAlunos){
+            if (aluno.getId_turma().getId().equals(turma.getId())){
+                listaDeAlunos.add(aluno);
+            }
+        }
+        turma.setAlunos(listaDeAlunos);
+        if (!request.nome().isBlank()){
+            turma.setNome(request.nome());
+        } else {
+            log.error("Nome Invalido");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nome é invalido");
+        }
         service.atualizar(turma.getId());
         return turma;
     }

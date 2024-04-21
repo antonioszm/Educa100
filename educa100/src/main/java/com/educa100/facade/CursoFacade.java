@@ -54,7 +54,7 @@ public class CursoFacade {
         List<TurmaEntity> listaGeralDeTurmas = turmaService.listarTodos();
         List<TurmaEntity> listaDeTurmas = new ArrayList<>();
         for (TurmaEntity turma : listaGeralDeTurmas){
-            if (turma.getId_curso().equals(curso.getId())){
+            if (turma.getId_curso().getId().equals(curso.getId())){
                 listaDeTurmas.add(turma);
             }
         }
@@ -62,7 +62,7 @@ public class CursoFacade {
         List<MateriaEntity> listaGeralDeMaterias = materiaService.listarTodos();
         List<MateriaEntity> listaDeMaterias = new ArrayList<>();
         for (MateriaEntity materia : listaGeralDeMaterias){
-            if (materia.getId_curso().equals(curso.getId())){
+            if (materia.getId_curso().getId().equals(curso.getId())){
                 listaDeMaterias.add(materia);
             }
         }
@@ -95,7 +95,7 @@ public class CursoFacade {
         List<TurmaEntity> listaGeralDeTurmas = turmaService.listarTodos();
         List<TurmaEntity> listaDeTurmas = new ArrayList<>();
         for (TurmaEntity turma : listaGeralDeTurmas){
-            if (turma.getId_curso().equals(curso.getId())){
+            if (turma.getId_curso().getId().equals(curso.getId())){
                 listaDeTurmas.add(turma);
             }
         }
@@ -103,7 +103,7 @@ public class CursoFacade {
         List<MateriaEntity> listaGeralDeMaterias = materiaService.listarTodos();
         List<MateriaEntity> listaDeMaterias = new ArrayList<>();
         for (MateriaEntity materia : listaGeralDeMaterias){
-            if (materia.getId_curso().equals(curso.getId())){
+            if (materia.getId_curso().getId().equals(curso.getId())){
                 listaDeMaterias.add(materia);
             }
         }
