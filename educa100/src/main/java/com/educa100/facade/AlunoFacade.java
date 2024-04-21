@@ -3,9 +3,11 @@ package com.educa100.facade;
 import com.educa100.controller.dto.request.AlunoRequest;
 import com.educa100.controller.dto.response.AlunoResponse;
 import com.educa100.datasource.entity.AlunoEntity;
+import com.educa100.datasource.entity.NotaEntity;
 import com.educa100.datasource.entity.TurmaEntity;
 import com.educa100.datasource.entity.UsuarioEntity;
 import com.educa100.service.AlunoServiceImpl;
+import com.educa100.service.NotaServiceImpl;
 import com.educa100.service.TurmaServiceImpl;
 import com.educa100.service.UsuarioServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -27,14 +29,17 @@ public final class AlunoFacade {
 
     private final UsuarioServiceImpl usuarioService;
 
-    public AlunoFacade(AlunoServiceImpl service, TurmaServiceImpl turmaService, UsuarioServiceImpl usuarioService) {
+    private final NotaServiceImpl notaService;
+
+    public AlunoFacade(AlunoServiceImpl service, TurmaServiceImpl turmaService, UsuarioServiceImpl usuarioService, NotaServiceImpl notaService) {
         this.service = service;
         this.turmaService = turmaService;
         this.usuarioService = usuarioService;
+        this.notaService = notaService;
     }
     public AlunoEntity criarAluno(AlunoRequest request, JwtAuthenticationToken jwt) throws Exception {
         UsuarioEntity usuarioLogado = usuarioService.listarPorId(Long.valueOf(jwt.getName()));
-        if (!usuarioLogado.getId_papel().equals(1) || !usuarioLogado.getId_papel().equals(5)){
+        if (usuarioLogado.getId_papel().getId() != 1 || usuarioLogado.getId_papel().getId() != 5){
                 throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores ou alunos podem criar alunos");
         }
         AlunoEntity aluno = new AlunoEntity();
@@ -55,7 +60,7 @@ public final class AlunoFacade {
             log.error("Usuario é nullo");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-        if (!usuarioLogado.getId_papel().equals(1) && !usuarioValido.getId_papel().equals(usuarioLogado.getId_papel())){
+        if (usuarioLogado.getId_papel().getId() != 1  && !usuarioValido.getId_papel().equals(usuarioLogado.getId_papel())){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO,você so pode cadastrar você mesmo");
         }
         aluno.setId_usuario(usuarioValido);
@@ -74,11 +79,11 @@ public final class AlunoFacade {
 
     public AlunoEntity listarPorId(Long id,JwtAuthenticationToken jwt) throws Exception {
         UsuarioEntity usuarioLogado = usuarioService.listarPorId(Long.valueOf(jwt.getName()));
-        if (!usuarioLogado.getId_papel().equals(1) || !usuarioLogado.getId_papel().equals(5)){
+        if (usuarioLogado.getId_papel().getId() != 1  || usuarioLogado.getId_papel().getId() != 5){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores ou alunos podem listar alunos");
         }
         AlunoEntity aluno = service.listarPorId(id);
-        if (!usuarioLogado.getId_papel().equals(1) || aluno.getId_usuario().equals(usuarioLogado.getId())){
+        if (usuarioLogado.getId_papel().getId() != 1  || aluno.getId_usuario().getId().equals((usuarioLogado.getId()))){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores ou o próprio alunos podem se listar");
         }
         return aluno;
@@ -86,7 +91,7 @@ public final class AlunoFacade {
 
     public AlunoEntity atualizar(Long id, AlunoRequest request,JwtAuthenticationToken jwt) throws Exception {
         UsuarioEntity usuarioLogado = usuarioService.listarPorId(Long.valueOf(jwt.getName()));
-        if (!usuarioLogado.getId_papel().equals(1) || !usuarioLogado.getId_papel().equals(5)){
+        if (usuarioLogado.getId_papel().getId() != 1  || usuarioLogado.getId_papel().getId() != 5){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"ACESSO NEGADO, só adiministradores ou alunos podem atualizar alunos");
         }
         AlunoEntity aluno = service.listarPorId(id);
@@ -95,7 +100,7 @@ public final class AlunoFacade {
         if (usuario.isPresent()){
             usuarioValido = usuario.get();
         }
-        if (!usuarioLogado.getId_papel().equals(1) && !usuarioValido.getId_papel().equals(usuarioLogado.getId_papel())){
+        if (usuarioLogado.getId_papel().getId() != 1  && !usuarioValido.getId_papel().equals(usuarioLogado.getId_papel())){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, você so pode atualizar você mesmo");
         }
         Optional<TurmaEntity> turma = Optional.ofNullable(turmaService.listarPorId(request.id_turma()));
@@ -113,7 +118,7 @@ public final class AlunoFacade {
 
     public void deletar(Long id, JwtAuthenticationToken jwt) throws Exception {
         UsuarioEntity usuarioLogado = usuarioService.listarPorId(Long.valueOf(jwt.getName()));
-        if (!usuarioLogado.getId_papel().equals(1)){
+        if (usuarioLogado.getId_papel().getId() != 1 ){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores podem deletar alunos");
         }
         service.removerPorId(id);
@@ -122,7 +127,7 @@ public final class AlunoFacade {
 
     public List<AlunoEntity> listarTodos(JwtAuthenticationToken jwt) throws Exception {
         UsuarioEntity usuarioLogado = usuarioService.listarPorId(Long.valueOf(jwt.getName()));
-        if (usuarioLogado.getId_papel().equals(1)) {
+        if (usuarioLogado.getId_papel().getId() == 1 ) {
             List<AlunoEntity> listaAlunos = service.listarTodos();
             if (listaAlunos.isEmpty()) {
                 log.info("Não ha alunos para serem listados");
@@ -132,5 +137,17 @@ public final class AlunoFacade {
         }else {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"ACESSO NEGADO, so administradores podem listar todos os alunos");
         }
+    }
+    public Double getPontuacao(Long id,JwtAuthenticationToken jwt){
+        List<NotaEntity> listaNotas = notaService.listarPorIdAluno(id);
+        if (service.listarPorId(id) == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        int numeroDeMaterias = service.listarPorId(id).getId_turma().getId_curso().getMaterias().size();
+        double pontuacao = 0;
+        for (NotaEntity notas: listaNotas){
+            pontuacao += notas.getValor();
+        }
+        return ((pontuacao/numeroDeMaterias)*10);
     }
 }
