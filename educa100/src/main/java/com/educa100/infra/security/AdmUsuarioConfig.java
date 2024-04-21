@@ -43,5 +43,20 @@ public class AdmUsuarioConfig implements CommandLineRunner {
                     usuarioRepository.save(usuario);
                 }
         );
+        PapelEntity papelPedagogo = new PapelEntity();
+        papelPedagogo.setNome(PapelEntity.Papel.PEDAGOGICO.name());
+        papelRepository.save(papelPedagogo);
+
+        PapelEntity papelRecruiter = new PapelEntity();
+        papelRecruiter.setNome(PapelEntity.Papel.RECRUITER.name());
+        papelRepository.save(papelRecruiter);
+
+        PapelEntity papelProfessor = new PapelEntity();
+        papelProfessor.setNome(PapelEntity.Papel.PROFESSOR.name());
+        papelRepository.save(papelProfessor);
+
+        PapelEntity papelAluno = new PapelEntity();
+        papelAluno.setNome(PapelEntity.Papel.ALUNO.name());
+        papelRepository.save(papelAluno);
     }
 }
