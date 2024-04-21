@@ -4,11 +4,13 @@ import com.educa100.datasource.entity.UsuarioEntity;
 import com.educa100.datasource.repository.UsuarioRepository;
 import com.educa100.infra.exception.TurmaNotFoundException;
 import com.educa100.infra.exception.UsuarioNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class UsuarioServiceImpl implements UsuarioService{
 
     private final UsuarioRepository repository;
@@ -25,6 +27,11 @@ public class UsuarioServiceImpl implements UsuarioService{
 
     @Override
     public UsuarioEntity listarPorId(Long id) {
-        return repository.findById(id).orElseThrow(() -> new UsuarioNotFoundException(id));
+        try {
+            return repository.findById(id).orElseThrow(() -> new UsuarioNotFoundException(id));
+        } catch (UsuarioNotFoundException e){
+            log.error("Erro: {}",  e.getMessage());
+            throw e;
+        }
     }
 }

@@ -3,11 +3,13 @@ package com.educa100.service;
 import com.educa100.datasource.entity.AlunoEntity;
 import com.educa100.datasource.repository.AlunoRepository;
 import com.educa100.infra.exception.AlunoNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Slf4j
 public class AlunoServiceImpl implements AlunoService{
 
     private final AlunoRepository repository;
@@ -41,6 +43,11 @@ public class AlunoServiceImpl implements AlunoService{
 
     @Override
     public AlunoEntity listarPorId(Long id) {
-        return repository.findById(id).orElseThrow(() -> new AlunoNotFoundException(id));
+        try {
+            return repository.findById(id).orElseThrow(() -> new AlunoNotFoundException(id));
+        } catch (AlunoNotFoundException e){
+            log.error("Erro: {}",  e.getMessage());
+            throw e;
+        }
     }
 }

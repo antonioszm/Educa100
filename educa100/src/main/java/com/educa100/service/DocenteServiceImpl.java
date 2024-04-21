@@ -3,11 +3,13 @@ package com.educa100.service;
 import com.educa100.datasource.entity.DocenteEntity;
 import com.educa100.datasource.repository.DocenteRepository;
 import com.educa100.infra.exception.DocenteNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Slf4j
 public class DocenteServiceImpl implements DocenteService{
 
     private final DocenteRepository repository;
@@ -41,6 +43,12 @@ public class DocenteServiceImpl implements DocenteService{
 
     @Override
     public DocenteEntity listarPorId(Long id) {
-        return repository.findById(id).orElseThrow(() -> new DocenteNotFoundException(id));
+        try {
+            return repository.findById(id).orElseThrow(() -> new DocenteNotFoundException(id));
+        } catch (DocenteNotFoundException e){
+            log.error("Erro: {}",  e.getMessage());
+            throw e;
+        }
+
     }
 }
