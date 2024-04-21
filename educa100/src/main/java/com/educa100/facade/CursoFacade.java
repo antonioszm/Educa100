@@ -45,7 +45,14 @@ public class CursoFacade {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores podem cirar cursos");
         }
         CursoEntity curso = new CursoEntity();
-        if (!request.nome().isBlank()){
+        boolean nomeEmUso = false;
+        List<CursoEntity> listaDeDocentes = service.listarTodos();
+        for (CursoEntity cursos : listaDeDocentes){
+            if (cursos.getNome().equals(request.nome())){
+                nomeEmUso = true;
+            }
+        }
+        if (!request.nome().isBlank() && !nomeEmUso){
             curso.setNome(request.nome());
         } else {
             log.error("Nome Invalido");
@@ -86,7 +93,14 @@ public class CursoFacade {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores ou  Docentes podem listar cursos");
         }
         CursoEntity curso = service.listarPorId(id);
-        if (!request.nome().isBlank()){
+        boolean nomeEmUso = false;
+        List<CursoEntity> cursos = service.listarTodos();
+        for (CursoEntity c : cursos){
+            if (c.getNome().equals(request.nome())){
+                nomeEmUso = true;
+            }
+        }
+        if (!request.nome().isBlank() && !nomeEmUso){
             curso.setNome(request.nome());
         } else {
             log.error("Nome Invalido");

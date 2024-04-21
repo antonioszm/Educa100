@@ -45,7 +45,14 @@ public final class AlunoFacade {
                 throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores ou alunos podem criar alunos");
         }
         AlunoEntity aluno = new AlunoEntity();
-        if (!request.nome().isBlank()){
+        boolean nomeEmUso = false;
+        List<AlunoEntity> Alunos = service.listarTodos();
+        for (AlunoEntity a : Alunos){
+            if (a.getNome().equals(request.nome())){
+                nomeEmUso = true;
+            }
+        }
+        if (!request.nome().isBlank() && !nomeEmUso){
             aluno.setNome(request.nome());
         } else {
             log.error("Nome Invalido");
@@ -110,7 +117,14 @@ public final class AlunoFacade {
         if (turma.isPresent()){
             turmaValida = turma.get();
         }
-        if (!request.nome().isBlank()){
+        boolean nomeEmUso = false;
+        List<AlunoEntity> Alunos = service.listarTodos();
+        for (AlunoEntity a : Alunos){
+            if (a.getNome().equals(request.nome())){
+                nomeEmUso = true;
+            }
+        }
+        if (!request.nome().isBlank() && !nomeEmUso){
             aluno.setNome(request.nome());
         } else {
             log.error("Nome Invalido");

@@ -34,7 +34,14 @@ public class DocenteFacade {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores ou docentes podem criar docentes");
         }
         DocenteEntity docente = new DocenteEntity();
-        if (!request.nome().isBlank()){
+        boolean nomeEmUso = false;
+        List<DocenteEntity> listaDeDocentes = service.listarTodos();
+        for (DocenteEntity docentes : listaDeDocentes){
+            if (docentes.getNome().equals(request.nome())){
+                nomeEmUso = true;
+            }
+        }
+        if (!request.nome().isBlank() && !nomeEmUso){
             docente.setNome(request.nome());
         } else {
             log.error("Nome Invalido");
@@ -51,7 +58,7 @@ public class DocenteFacade {
             log.error("Usuario é nullo");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-        if (usuarioLogado.getId_papel().getId() != 1 && !usuarioValido.getId_papel().equals(usuarioLogado.getId_papel())){
+        if (usuarioLogado.getId_papel().getId() != 1 || !usuarioValido.getId_papel().equals(usuarioLogado.getId_papel())){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO,você so pode cadastrar você mesmo");
         }
         docente.setId_usuario(usuarioValido);
@@ -91,7 +98,14 @@ public class DocenteFacade {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
         docente.setId_usuario(usuarioValido);
-        if (!request.nome().isBlank()){
+        boolean nomeEmUso = false;
+        List<DocenteEntity> docentes = service.listarTodos();
+        for (DocenteEntity d : docentes){
+            if (d.getNome().equals(request.nome())){
+                nomeEmUso = true;
+            }
+        }
+        if (!request.nome().isBlank() && !nomeEmUso){
             docente.setNome(request.nome());
         } else {
             log.error("Nome Invalido");
@@ -104,7 +118,7 @@ public class DocenteFacade {
 
     public void deletar(Long id,JwtAuthenticationToken jwt){
         UsuarioEntity usuarioLogado = usuarioService.listarPorId(Long.valueOf(jwt.getName()));
-        if (usuarioLogado.getId_papel().getId() != 5){
+        if (usuarioLogado.getId_papel().getId() != 1){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores podem deletar docentes");
         }
         service.removerPorId(id);
