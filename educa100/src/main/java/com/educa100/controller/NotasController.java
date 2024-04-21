@@ -3,12 +3,16 @@ package com.educa100.controller;
 import com.educa100.controller.dto.request.MateriaRequest;
 import com.educa100.controller.dto.request.NotaRequest;
 import com.educa100.controller.dto.request.TurmaRequest;
+import com.educa100.controller.dto.response.AlunoResponse;
 import com.educa100.controller.dto.response.MateriaResponse;
 import com.educa100.controller.dto.response.NotaResponse;
 import com.educa100.datasource.entity.*;
+import com.educa100.facade.NotaFacade;
 import com.educa100.service.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -17,118 +21,48 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/notas")
+@Slf4j
 public class NotasController {
 
-    private final NotaServiceImpl service;
+    public final NotaFacade facade;
 
-    private final AlunoServiceImpl alunoService;
-
-    private final DocenteServiceImpl docenteService;
-
-    private final MateriaServiceImpl materiaService;
-
-
-    public NotasController(NotaServiceImpl service, AlunoServiceImpl alunoService, DocenteServiceImpl docenteService, MateriaServiceImpl materiaService) {
-        this.service = service;
-        this.alunoService = alunoService;
-        this.docenteService = docenteService;
-        this.materiaService = materiaService;
+    public NotasController(NotaFacade facade) {
+        this.facade = facade;
     }
 
-
     @PostMapping
-    public ResponseEntity<NotaResponse> criarNotas(@RequestBody NotaRequest request){
-
-        NotaEntity nota = new NotaEntity();
-
-        Optional<AlunoEntity> aluno = Optional.ofNullable(alunoService.listarPorId(request.id_aluno()));
-        AlunoEntity alunoValido = null;
-        if (aluno.isPresent()){
-            alunoValido = aluno.get();
-        }
-        nota.setId_aluno(alunoValido);
-
-        Optional<DocenteEntity> professor = Optional.ofNullable(docenteService.listarPorId(request.id_professor()));
-        DocenteEntity docenteValido = null;
-        if (professor.isPresent()){
-            docenteValido = professor.get();
-        }
-        nota.setId_professor(docenteValido);
-
-        Optional<MateriaEntity> materia = Optional.ofNullable(materiaService.listarPorId(request.id_materia()));
-        MateriaEntity materiaValido = null;
-        if (materia.isPresent()){
-            materiaValido = materia.get();
-        }
-        nota.setId_materia(materiaValido);
-
-        nota.setData(request.data());
-        nota.setValor(request.valor());
-
-        service.salvar(nota);
-
+    public ResponseEntity<NotaResponse> criarNotas(@RequestBody NotaRequest request, JwtAuthenticationToken jwt){
+        NotaEntity nota = facade.criarNotas(request, jwt);
+        log.info("Nota cirado com sucesso!");
         return ResponseEntity.created(null).body(new NotaResponse(nota.getId()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<NotaEntity> listarPorId(@PathVariable Long id){
-        NotaEntity nota = service.listarPorId(id);
+    public ResponseEntity<NotaEntity> listarPorId(@PathVariable Long id,JwtAuthenticationToken jwt){
+        log.info("Nota com {id} foi listado" + id);
+        NotaEntity nota = facade.listarPorId(id, jwt);
+
         return ResponseEntity.ok(nota);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<NotaEntity> atualizar(@PathVariable Long id, @RequestBody NotaRequest request){
-        NotaEntity nota = service.listarPorId(id);
-
-        Optional<AlunoEntity> aluno = Optional.ofNullable(alunoService.listarPorId(request.id_aluno()));
-        AlunoEntity alunoValido = null;
-        if (aluno.isPresent()){
-            alunoValido = aluno.get();
-        }
-        nota.setId_aluno(alunoValido);
-
-        Optional<DocenteEntity> professor = Optional.ofNullable(docenteService.listarPorId(request.id_professor()));
-        DocenteEntity docenteValido = null;
-        if (professor.isPresent()){
-            docenteValido = professor.get();
-        }
-        nota.setId_professor(docenteValido);
-
-        Optional<MateriaEntity> materia = Optional.ofNullable(materiaService.listarPorId(request.id_materia()));
-        MateriaEntity materiaValido = null;
-        if (materia.isPresent()){
-            materiaValido = materia.get();
-        }
-        nota.setId_materia(materiaValido);
-
-        nota.setData(request.data());
-        nota.setValor(request.valor());
-
-        service.atualizar(nota.getId());
+    public ResponseEntity<NotaEntity> atualizar(@PathVariable Long id, @RequestBody NotaRequest request,JwtAuthenticationToken jwt){
+        NotaEntity nota = facade.atualizar(id, request, jwt);
+        log.info("Nota atualizado com sucesso!");
         return ResponseEntity.ok(nota);
     }
 
     @DeleteMapping("/{id}")
-    public void deletar(@PathVariable Long id){
-        service.removerPorId(id);
+    public void deletar(@PathVariable Long id, JwtAuthenticationToken jwt){
+        facade.deletar(id, jwt);
+        log.info("Nota deletado com sucesso!");
         throw new ResponseStatusException(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping
-    public ResponseEntity<List<NotaEntity>> listarTodos(){
-        List<NotaEntity> listaNotas = service.listarTodos();
-        if (listaNotas.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        return ResponseEntity.ok(listaNotas);
-    }
-
-    @GetMapping("alunos/{id_aluno}/notas")
-    public ResponseEntity<List<NotaEntity>> listaAlunoId(@PathVariable Long id_aluno){
-        List<NotaEntity> listaNotas = service.listarPorIdAluno(id_aluno);
-        if (listaNotas.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        return ResponseEntity.ok(listaNotas);
+    public ResponseEntity<List<NotaEntity>> listarTodos(JwtAuthenticationToken jwt){
+        List<NotaEntity> listaDeNotas = facade.listarTodos(jwt);
+        log.info("Todas as notas listadas com sucesso!");
+        return ResponseEntity.ok(listaDeNotas);
     }
 }
