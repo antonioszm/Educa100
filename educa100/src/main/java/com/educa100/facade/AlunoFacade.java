@@ -13,8 +13,10 @@ import com.educa100.service.UsuarioServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -139,8 +141,10 @@ public final class AlunoFacade {
         }
     }
     public Double getPontuacao(Long id,JwtAuthenticationToken jwt){
+        UsuarioEntity usuarioLogado = usuarioService.listarPorId(Long.valueOf(jwt.getName()));
+        AlunoEntity aluno = service.listarPorId(id);
         List<NotaEntity> listaNotas = notaService.listarPorIdAluno(id);
-        if (service.listarPorId(id) == null){
+        if (service.listarPorId(id) == null || usuarioLogado.getId().equals(aluno.getId_usuario().getId())){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         int numeroDeMaterias = service.listarPorId(id).getId_turma().getId_curso().getMaterias().size();
@@ -149,5 +153,15 @@ public final class AlunoFacade {
             pontuacao += notas.getValor();
         }
         return ((pontuacao/numeroDeMaterias)*10);
+    }
+
+    public List<NotaEntity> listaAlunoId(Long id_aluno,JwtAuthenticationToken jwt){
+        UsuarioEntity usuarioLogado = usuarioService.listarPorId(Long.valueOf(jwt.getName()));
+        List<NotaEntity> listaNotas = notaService.listarPorIdAluno(id_aluno);
+        AlunoEntity aluno = service.listarPorId(id_aluno);
+        if (listaNotas.isEmpty() || usuarioLogado.getId().equals(aluno.getId_usuario().getId()) ){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return listaNotas;
     }
 }

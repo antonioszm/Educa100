@@ -66,4 +66,10 @@ public class AlunoController {
         log.info("Pontuação do aluno com id " +id);
         return ResponseEntity.ok(facade.getPontuacao(id, jwt));
     }
+
+    @GetMapping("/{id_aluno}/notas")
+    public ResponseEntity<List<NotaEntity>> listaAlunoId(Long id_aluno,JwtAuthenticationToken jwt){
+        log.info("Notas do aluno com id " +id_aluno);
+        return ResponseEntity.ok(facade.listaAlunoId(id_aluno,jwt));
+    }
 }
