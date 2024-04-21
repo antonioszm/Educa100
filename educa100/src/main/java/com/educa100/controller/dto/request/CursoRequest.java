@@ -6,5 +6,5 @@ import com.educa100.datasource.entity.TurmaEntity;
 import java.util.Date;
 import java.util.List;
 
-public record CursoRequest(String nome, List<TurmaEntity> turmas, List<MateriaEntity> materias) {
+public record CursoRequest(String nome) {
 }
