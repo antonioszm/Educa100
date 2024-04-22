@@ -46,11 +46,17 @@ public class CadastroController {
         Optional<UsuarioEntity> usuarioComNomeIgual = usuarioRepository.findByLogin(usuarioRequest.login());
 
         if (usuarioComNomeIgual.isPresent()){
-            throw new Exception("Este nome de usuario não esta disponivel");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Este nome de usuario não esta disponivel");
         }
 
         UsuarioEntity usuario = new UsuarioEntity();
+        if (usuarioRequest.login() == null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Este nome é null");
+        }
         usuario.setLogin(usuarioRequest.login());
+        if (usuarioRequest.senha() == null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"senha é null");
+        }
         usuario.setSenha(passwordEncoder.encode(usuarioRequest.senha()));
 
 
