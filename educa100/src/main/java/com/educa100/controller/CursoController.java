@@ -63,9 +63,9 @@ public class CursoController {
     }
 
     @GetMapping("/{id_curso}/materias")
-    public ResponseEntity<List<MateriaEntity>> listaCursoId(@PathVariable Long id){
-        List<MateriaEntity> listaMaterias = facade.listaCursoId(id);
-        log.info("Todos os materias do curso "+id+" listados com sucesso!");
+    public ResponseEntity<List<MateriaEntity>> listaCursoId(@PathVariable Long id_curso){
+        List<MateriaEntity> listaMaterias = facade.listaCursoId(id_curso);
+        log.info("Todos os materias do curso "+id_curso+" listados com sucesso!");
         return ResponseEntity.ok(listaMaterias);
     }
 }

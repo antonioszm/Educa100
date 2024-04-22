@@ -4,6 +4,7 @@ import com.educa100.controller.dto.request.LoginResquest;
 import com.educa100.controller.dto.request.UsuarioRequest;
 import com.educa100.controller.dto.response.LoginResponse;
 import com.educa100.datasource.repository.UsuarioRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,6 +14,7 @@ import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
 
@@ -37,7 +39,7 @@ public class TokenController {
         var usuario = usuarioRepository.findByLogin(loginRequest.login());
 
         if (usuario.isEmpty()|| !usuario.get().isLoginCorreto(loginRequest, bCryptPasswordEncoder)){
-            throw new BadCredentialsException("Login ou Senha incorretos");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Login ou Senha incorretos");
         }
         var agora = Instant.now();
         var expiraEm = 300L;

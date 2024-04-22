@@ -14,15 +14,15 @@ public class NotaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_aluno", nullable = false)
     private AlunoEntity id_aluno;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_professor", nullable = false)
     private DocenteEntity id_professor;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_materia", nullable = false)
     private MateriaEntity id_materia;
 

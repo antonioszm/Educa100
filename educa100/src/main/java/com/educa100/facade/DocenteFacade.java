@@ -58,8 +58,8 @@ public class DocenteFacade {
             log.error("Usuario é nullo");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-        if (usuarioLogado.getId_papel().getId() != 1 || !usuarioValido.getId_papel().equals(usuarioLogado.getId_papel())){
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO,você so pode cadastrar você mesmo");
+        if (usuarioLogado.getId_papel().getId() != 1 && !usuarioValido.getId_papel().equals(usuarioLogado.getId_papel())){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, Só adiministradores ou o proprio docente podem se criar o docente");
         }
         docente.setId_usuario(usuarioValido);
 
@@ -74,7 +74,7 @@ public class DocenteFacade {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores ou docentes podem listar docentes");
         }
         DocenteEntity docente = service.listarPorId(id);
-        if (usuarioLogado.getId_papel().getId() != 1 || docente.getId_usuario().equals(usuarioLogado.getId())){
+        if (usuarioLogado.getId_papel().getId() != 1 && !docente.getId_usuario().getId().equals(usuarioLogado.getId())){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores ou o próprio docente podem se listar");
         }
         return docente;
@@ -86,7 +86,7 @@ public class DocenteFacade {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores ou docentes podem atualizar docentes");
         }
         DocenteEntity docente = service.listarPorId(id);
-        if (usuarioLogado.getId_papel().getId() != 1 || docente.getId_usuario().equals(usuarioLogado.getId())){
+        if (usuarioLogado.getId_papel().getId() != 1 && !docente.getId_usuario().getId().equals(usuarioLogado.getId())){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores ou o próprio docente podem atualizar docentes");
         }
         Optional<UsuarioEntity> usuario = Optional.ofNullable(usuarioService.listarPorId(request.id_usuario()));
