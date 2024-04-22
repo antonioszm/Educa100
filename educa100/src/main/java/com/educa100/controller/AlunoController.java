@@ -68,7 +68,7 @@ public class AlunoController {
     }
 
     @GetMapping("/{id_aluno}/notas")
-    public ResponseEntity<List<NotaEntity>> listaAlunoId(Long id_aluno,JwtAuthenticationToken jwt){
+    public ResponseEntity<List<NotaEntity>> listaAlunoId(@PathVariable Long id_aluno,JwtAuthenticationToken jwt){
         log.info("Notas do aluno com id " +id_aluno);
         return ResponseEntity.ok(facade.listaAlunoId(id_aluno,jwt));
     }

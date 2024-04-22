@@ -86,7 +86,7 @@ public class NotaFacade {
     public NotaEntity listarPorId(Long id, JwtAuthenticationToken jwt){
         UsuarioEntity usuarioLogado = usuarioService.listarPorId(Long.valueOf(jwt.getName()));
         NotaEntity nota = service.listarPorId(id);
-        if (usuarioLogado.getId_papel().getId() != 1  || nota.getId_aluno().getId_usuario().getId().equals(usuarioLogado.getId())  || usuarioLogado.getId_papel().getId() != 4 || usuarioLogado.getId_papel().getId() != 2){
+        if (usuarioLogado.getId_papel().getId() != 1  && !nota.getId_aluno().getId_usuario().getId().equals(usuarioLogado.getId())  && usuarioLogado.getId_papel().getId() != 4 && usuarioLogado.getId_papel().getId() != 2){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores/o próprio alunos/professores ou pedagogos podem listar nota");
         }
         return nota;
@@ -94,7 +94,7 @@ public class NotaFacade {
 
     public NotaEntity atualizar(Long id,NotaRequest request, JwtAuthenticationToken jwt){
         UsuarioEntity usuarioLogado = usuarioService.listarPorId(Long.valueOf(jwt.getName()));
-        if (usuarioLogado.getId_papel().getId() != 1 || usuarioLogado.getId_papel().getId() != 5){
+        if (usuarioLogado.getId_papel().getId() != 1 && usuarioLogado.getId_papel().getId() != 5){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores ou o professores atualizar notas");
         }
 
@@ -149,7 +149,7 @@ public class NotaFacade {
 
     public List<NotaEntity> listarTodos(JwtAuthenticationToken jwt){
         UsuarioEntity usuarioLogado = usuarioService.listarPorId(Long.valueOf(jwt.getName()));
-        if (usuarioLogado.getId_papel().getId() != 1  || usuarioLogado.getId_papel().getId() != 4 || usuarioLogado.getId_papel().getId() != 2){
+        if (usuarioLogado.getId_papel().getId() != 1  && usuarioLogado.getId_papel().getId() != 4 && usuarioLogado.getId_papel().getId() != 2){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores/professores ou pedagogos podem listar todas as notas");
         }
         List<NotaEntity> listaNotas = service.listarTodos();

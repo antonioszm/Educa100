@@ -41,7 +41,7 @@ public final class AlunoFacade {
     }
     public AlunoEntity criarAluno(AlunoRequest request, JwtAuthenticationToken jwt) throws Exception {
         UsuarioEntity usuarioLogado = usuarioService.listarPorId(Long.valueOf(jwt.getName()));
-        if (usuarioLogado.getId_papel().getId() != 1 || usuarioLogado.getId_papel().getId() != 5){
+        if (usuarioLogado.getId_papel().getId() != 1 && usuarioLogado.getId_papel().getId() != 5){
                 throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores ou alunos podem criar alunos");
         }
         AlunoEntity aluno = new AlunoEntity();
@@ -70,7 +70,7 @@ public final class AlunoFacade {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
         if (usuarioLogado.getId_papel().getId() != 1  && !usuarioValido.getId_papel().equals(usuarioLogado.getId_papel())){
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO,você so pode cadastrar você mesmo");
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO,só um adiministrador ou o proprio aluno podem cadastrar o aluno");
         }
         aluno.setId_usuario(usuarioValido);
         Optional<TurmaEntity> turma = Optional.ofNullable(turmaService.listarPorId(request.id_turma()));
@@ -100,7 +100,7 @@ public final class AlunoFacade {
 
     public AlunoEntity atualizar(Long id, AlunoRequest request,JwtAuthenticationToken jwt) throws Exception {
         UsuarioEntity usuarioLogado = usuarioService.listarPorId(Long.valueOf(jwt.getName()));
-        if (usuarioLogado.getId_papel().getId() != 1  || usuarioLogado.getId_papel().getId() != 5){
+        if (usuarioLogado.getId_papel().getId() != 1  && usuarioLogado.getId_papel().getId() != 5){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"ACESSO NEGADO, só adiministradores ou alunos podem atualizar alunos");
         }
         AlunoEntity aluno = service.listarPorId(id);
