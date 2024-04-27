@@ -15,6 +15,7 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,8 +55,12 @@ public final class AlunoFacade {
             log.error("Nome Invalido");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
+        if (request.dataNascimento() == null){
+            aluno.setData_nascimento(LocalDate.now());
+        } else {
+            aluno.setData_nascimento(request.dataNascimento());
+        }
 
-        aluno.setData_nascimento(request.dataNascimento());
 
         Optional<UsuarioEntity> usuario = Optional.ofNullable(usuarioService.listarPorId(request.id_usuario()));
         UsuarioEntity usuarioValido = null;
@@ -129,7 +134,11 @@ public final class AlunoFacade {
             log.error("Nome Invalido");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nome é invalido");
         }
-        aluno.setData_nascimento(request.dataNascimento());
+        if (request.dataNascimento() == null){
+            aluno.setData_nascimento(aluno.getData_nascimento());
+        } else {
+            aluno.setData_nascimento(request.dataNascimento());
+        }
         if (!request.id_usuario().equals(usuarioValido.getId())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Você não pode modificar o id de usuario de um aluno já cadastrado");
         }

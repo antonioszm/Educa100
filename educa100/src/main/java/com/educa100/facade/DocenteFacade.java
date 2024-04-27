@@ -11,6 +11,7 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,8 +45,11 @@ public class DocenteFacade {
             log.error("Nome Invalido");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-
-        docente.setData_entrada(request.dataEntrada());
+        if (request.dataEntrada() == null){
+            docente.setData_entrada(LocalDate.now());
+        } else {
+            docente.setData_entrada(request.dataEntrada());
+        }
 
         Optional<UsuarioEntity> usuario = Optional.ofNullable(usuarioService.listarPorId(request.id_usuario()));
         UsuarioEntity usuarioValido = null;
@@ -110,7 +114,11 @@ public class DocenteFacade {
             log.error("Nome Invalido");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-        docente.setData_entrada(request.dataEntrada());
+        if (request.dataEntrada() == null){
+            docente.setData_entrada(docente.getData_entrada());
+        } else {
+            docente.setData_entrada(request.dataEntrada());
+        }
         docente.setId_usuario(usuarioValido);
         service.atualizar(docente.getId());
         return docente;

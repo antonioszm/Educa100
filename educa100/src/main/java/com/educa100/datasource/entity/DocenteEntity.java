@@ -19,8 +19,7 @@ public class DocenteEntity {
     @Column(unique = true)
     private String nome;
 
-    @ColumnDefault(value = "CURRENT_TIMESTAMP")
-    private LocalDate data_entrada;// = new Date();
+    private LocalDate data_entrada;
 
     @OneToOne
     @JoinColumn(name = "id_usuario", nullable = false, unique = true)
