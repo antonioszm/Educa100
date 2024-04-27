@@ -85,6 +85,9 @@ public class MateriaFacade {
                 nomeEmUso = true;
             }
         }
+        if (request.nome().equals(materia.getNome())){
+            nomeEmUso = false;
+        }
         if (!request.nome().isBlank() && !nomeEmUso){
             materia.setNome(request.nome());
         } else {

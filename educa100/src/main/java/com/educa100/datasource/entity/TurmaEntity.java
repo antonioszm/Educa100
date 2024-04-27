@@ -16,8 +16,7 @@ public class TurmaEntity {
     @Column(unique = true)
     private String nome;
 
-    @OneToMany
-    @JoinColumn(name = "id_alunos")
+    @OneToMany(mappedBy = "id_turma")
     private List<AlunoEntity> alunos;
 
 

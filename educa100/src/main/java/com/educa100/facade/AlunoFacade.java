@@ -124,6 +124,9 @@ public final class AlunoFacade {
                 nomeEmUso = true;
             }
         }
+        if (request.nome().equals(aluno.getNome())){
+            nomeEmUso = false;
+        }
         if (!request.nome().isBlank() && !nomeEmUso){
             aluno.setNome(request.nome());
         } else {

@@ -18,10 +18,8 @@ public interface CursoRepository extends JpaRepository<CursoEntity, Long> {
 
     @Modifying
     @Transactional
-    @Query("UPDATE CursoEntity c SET c.nome = :nome, c.turmas  = :turmas, c.turmas  = :materias WHERE c.id = :id")
+    @Query("UPDATE CursoEntity c SET c.nome = :nome WHERE c.id = :id")
     void update(@Param("id") Long id,
-                @Param("nome") String nome,
-                @Param("turmas") List<TurmaEntity> turmas,
-                @Param("materias") List<MateriaEntity> materias
+                @Param("nome") String nome
     );
 }

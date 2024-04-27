@@ -16,11 +16,9 @@ public class CursoEntity {
     @Column(unique = true)
     private String nome;
 
-    @OneToMany
-    @JoinColumn(name = "id_turmas")
+    @OneToMany(mappedBy = "id_curso")
     private List<TurmaEntity> turmas;
 
-    @OneToMany
-    @JoinColumn(name = "id_materias")
+    @OneToMany(mappedBy = "id_curso")
     private List<MateriaEntity> materias;
 }

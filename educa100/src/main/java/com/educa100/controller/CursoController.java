@@ -42,7 +42,7 @@ public class CursoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CursoEntity> atualizar(@PathVariable Long id, @RequestBody TurmaRequest request, JwtAuthenticationToken jwt){
+    public ResponseEntity<CursoEntity> atualizar(@PathVariable Long id, @RequestBody CursoRequest request, JwtAuthenticationToken jwt){
         CursoEntity curso = facade.atualizar(id, request, jwt);
         log.info("Curso atualizado com sucesso!");
         return ResponseEntity.ok(curso);

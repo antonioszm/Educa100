@@ -27,7 +27,7 @@ public class CursoServiceImpl implements CursoService{
     @Override
     public void atualizar(Long id) {
         CursoEntity curso = listarPorId(id);
-        repository.update(curso.getId(),curso.getNome(),curso.getTurmas(), curso.getMaterias());
+        repository.update(curso.getId(),curso.getNome());
     }
 
     @Override

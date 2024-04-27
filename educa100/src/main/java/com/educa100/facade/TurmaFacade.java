@@ -106,16 +106,14 @@ public class TurmaFacade {
         if (usuarioLogado.getId_papel().getId() != 5){
             return turma;
         }
-        throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Você não é autorizado a ter acesso a turma");
+        throw new ResponseStatusException(HttpStatus.UNAUTHORIZED  , "Você não é autorizado a ter acesso a turma");
     }
 
     public TurmaEntity atualizar(Long id,TurmaRequest request,JwtAuthenticationToken jwt){
         UsuarioEntity usuarioLogado = usuarioService.listarPorId(Long.valueOf(jwt.getName()));
         TurmaEntity turma = service.listarPorId(id);
-        if (usuarioLogado.getId_papel().getId() == 4) {
-            if (!turma.getProfessor().equals(usuarioLogado) ||  usuarioLogado.getId_papel().getId() != 1);{
-                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Você não é autorizado a atualizar a turma");
-            }
+        if (!turma.getProfessor().equals(usuarioLogado) &&  usuarioLogado.getId_papel().getId() != 1){
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Você não é autorizado a atualizar a turma");
         }
         Optional<DocenteEntity> docente = Optional.ofNullable(docenteService.listarPorId(request.id_professor()));
         DocenteEntity docenteValido = null;
@@ -149,6 +147,9 @@ public class TurmaFacade {
             if (t.getNome().equals(request.nome())){
                 nomeEmUso = true;
             }
+        }
+        if (request.nome().equals(turma.getNome())){
+            nomeEmUso = false;
         }
         if (!request.nome().isBlank() && !nomeEmUso){
             turma.setNome(request.nome());
