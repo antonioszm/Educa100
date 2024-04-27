@@ -1,7 +1,8 @@
 package com.educa100.controller;
 
 import com.educa100.controller.dto.request.AlunoRequest;
-import com.educa100.controller.dto.response.AlunoResponse;
+import com.educa100.controller.dto.response.*;
+import com.educa100.controller.dto.response.creation.AlunoCreationResponse;
 import com.educa100.datasource.entity.*;
 import com.educa100.facade.AlunoFacade;
 import lombok.extern.slf4j.Slf4j;
@@ -11,8 +12,8 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/alunos")
@@ -27,25 +28,25 @@ public class AlunoController {
 
 
     @PostMapping
-    public ResponseEntity<AlunoResponse> criarAluno(@RequestBody AlunoRequest request, JwtAuthenticationToken jwt) throws Exception {
+    public ResponseEntity<AlunoCreationResponse> criarAluno(@RequestBody AlunoRequest request, JwtAuthenticationToken jwt) throws Exception {
         AlunoEntity aluno = facade.criarAluno(request, jwt);
         log.info("Aluno cirado com sucesso!");
-        return ResponseEntity.created(null).body(new AlunoResponse(aluno.getId()));
+        return ResponseEntity.created(null).body(new AlunoCreationResponse(aluno.getId()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AlunoEntity> listarPorId(@PathVariable Long id, JwtAuthenticationToken jwt) throws Exception {
+    public ResponseEntity<AlunoResponse> listarPorId(@PathVariable Long id, JwtAuthenticationToken jwt) throws Exception {
         log.info("Aluno com {id} foi listado" + id);
         AlunoEntity aluno = facade.listarPorId(id, jwt);
 
-        return ResponseEntity.ok(aluno);
+        return ResponseEntity.ok(new AlunoResponse(aluno.getId(),aluno.getNome(),aluno.getData_nascimento(),aluno.getId_usuario().getId(),aluno.getId_turma().getId()));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AlunoEntity> atualizar(@PathVariable Long id, @RequestBody AlunoRequest request, JwtAuthenticationToken jwt) throws Exception {
+    public ResponseEntity<AlunoResponse> atualizar(@PathVariable Long id, @RequestBody AlunoRequest request, JwtAuthenticationToken jwt) throws Exception {
         AlunoEntity aluno = facade.atualizar(id, request, jwt);
         log.info("Aluno atualizado com sucesso!");
-        return ResponseEntity.ok(aluno);
+        return ResponseEntity.ok(new AlunoResponse(aluno.getId(),aluno.getNome(),aluno.getData_nascimento(),aluno.getId_usuario().getId(),aluno.getId_turma().getId()));
     }
 
     @DeleteMapping("/{id}")
@@ -56,10 +57,15 @@ public class AlunoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<AlunoEntity>> listarTodos(JwtAuthenticationToken jwt) throws Exception {
+    public ResponseEntity<List<AlunoResponse>> listarTodos(JwtAuthenticationToken jwt) throws Exception {
         List<AlunoEntity> listaDeAlunos = facade.listarTodos(jwt);
+        List<AlunoResponse> listaDeAlunoDto = new ArrayList<>();
+        for (AlunoEntity aluno : listaDeAlunos){
+            AlunoResponse dto = new AlunoResponse(aluno.getId(),aluno.getNome(),aluno.getData_nascimento(),aluno.getId_usuario().getId(),aluno.getId_turma().getId());
+            listaDeAlunoDto.add(dto);
+        }
         log.info("Todos os alunos listados com sucesso!");
-        return ResponseEntity.ok(listaDeAlunos);
+        return ResponseEntity.ok(listaDeAlunoDto);
     }
     @GetMapping("/{id}/pontuacao")
     public ResponseEntity<Double> getPontuacao(Long id,JwtAuthenticationToken jwt){
@@ -68,8 +74,14 @@ public class AlunoController {
     }
 
     @GetMapping("/{id_aluno}/notas")
-    public ResponseEntity<List<NotaEntity>> listaAlunoId(@PathVariable Long id_aluno,JwtAuthenticationToken jwt){
+    public ResponseEntity<List<NotaResponse>> listarNotasPorAluno(@PathVariable Long id_aluno,JwtAuthenticationToken jwt){
+        List<NotaEntity> listaNotas = facade.listarNotasPorAluno(id_aluno,jwt);
+        List<NotaResponse> listaNotasDto = new ArrayList<>();
+        for (NotaEntity nota: listaNotas){
+            NotaResponse dto = new NotaResponse(nota.getId(),nota.getId_aluno().getId(),nota.getId_professor().getId(),nota.getId_materia().getId(),nota.getValor(),nota.getData());
+            listaNotasDto.add(dto);
+        }
         log.info("Notas do aluno com id " +id_aluno);
-        return ResponseEntity.ok(facade.listaAlunoId(id_aluno,jwt));
+        return ResponseEntity.ok(listaNotasDto);
     }
 }

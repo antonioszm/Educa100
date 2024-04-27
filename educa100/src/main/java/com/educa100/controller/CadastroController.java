@@ -1,6 +1,7 @@
 package com.educa100.controller;
 
 import com.educa100.controller.dto.request.UsuarioRequest;
+import com.educa100.controller.dto.response.creation.UsuarioCreationResponse;
 import com.educa100.datasource.entity.PapelEntity;
 import com.educa100.datasource.entity.UsuarioEntity;
 import com.educa100.datasource.repository.PapelRepository;
@@ -14,7 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -38,7 +38,7 @@ public class CadastroController {
 
     @Transactional
     @PostMapping("/cadastro")
-    public ResponseEntity<Void> cadastro(@RequestBody UsuarioRequest usuarioRequest, JwtAuthenticationToken jwt) throws Exception {
+    public ResponseEntity<UsuarioCreationResponse> cadastro(@RequestBody UsuarioRequest usuarioRequest, JwtAuthenticationToken jwt) throws Exception {
         UsuarioEntity usuarioLogado = usuarioService.listarPorId(Long.valueOf(jwt.getName()));
         if (usuarioLogado.getId_papel().getId() != 1 ){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores podem criar Usuarios");
@@ -67,6 +67,6 @@ public class CadastroController {
         usuarioRepository.save(usuario);
 
 
-        return ResponseEntity.created(null).build();
+        return ResponseEntity.created(null).body(new UsuarioCreationResponse(usuario.getId()));
     }
 }

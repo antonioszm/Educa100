@@ -1,17 +1,14 @@
 package com.educa100.facade;
 
 import com.educa100.controller.dto.request.DocenteRequest;
-import com.educa100.controller.dto.response.DocenteResponse;
 import com.educa100.datasource.entity.DocenteEntity;
 import com.educa100.datasource.entity.UsuarioEntity;
 import com.educa100.service.DocenteServiceImpl;
 import com.educa100.service.UsuarioServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;

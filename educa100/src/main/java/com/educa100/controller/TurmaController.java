@@ -1,13 +1,10 @@
 package com.educa100.controller;
 
-import com.educa100.controller.dto.request.DocenteRequest;
 import com.educa100.controller.dto.request.TurmaRequest;
-import com.educa100.controller.dto.response.AlunoResponse;
 import com.educa100.controller.dto.response.TurmaResponse;
+import com.educa100.controller.dto.response.creation.TurmaCreationResponse;
 import com.educa100.datasource.entity.*;
 import com.educa100.facade.TurmaFacade;
-import com.educa100.infra.exception.AlunoNotFoundException;
-import com.educa100.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +12,8 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/turmas")
@@ -30,25 +27,34 @@ public class TurmaController {
     }
 
     @PostMapping
-    public ResponseEntity<TurmaResponse> criarTurma(@RequestBody TurmaRequest request, JwtAuthenticationToken jwt){
+    public ResponseEntity<TurmaCreationResponse> criarTurma(@RequestBody TurmaRequest request, JwtAuthenticationToken jwt){
         TurmaEntity turma = facade.criarTurma(request, jwt);
         log.info("Turma cirado com sucesso!");
-        return ResponseEntity.created(null).body(new TurmaResponse(turma.getId()));
+        return ResponseEntity.created(null).body(new TurmaCreationResponse(turma.getId()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TurmaEntity> listarPorId(@PathVariable Long id, JwtAuthenticationToken jwt){
+    public ResponseEntity<TurmaResponse> listarPorId(@PathVariable Long id, JwtAuthenticationToken jwt){
         log.info("Turma com {id} foi listado" + id);
         TurmaEntity turma = facade.listarPorId(id, jwt);
-
-        return ResponseEntity.ok(turma);
+        List<AlunoEntity> listaDeAlunos = turma.getAlunos();
+        List<Long> alunosId = new ArrayList<>();
+        for (AlunoEntity aluno :listaDeAlunos){
+            alunosId.add(aluno.getId());
+        }
+        return ResponseEntity.ok(new TurmaResponse(turma.getId(),turma.getNome(),alunosId,turma.getProfessor().getId(), turma.getId_curso().getId()));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TurmaEntity> atualizar(@PathVariable Long id, @RequestBody TurmaRequest request, JwtAuthenticationToken jwt){
+    public ResponseEntity<TurmaResponse> atualizar(@PathVariable Long id, @RequestBody TurmaRequest request, JwtAuthenticationToken jwt){
         TurmaEntity turma = facade.atualizar(id, request, jwt);
         log.info("Turma atualizado com sucesso!");
-        return ResponseEntity.ok(turma);
+        List<AlunoEntity> listaDeAlunos = turma.getAlunos();
+        List<Long> alunosId = new ArrayList<>();
+        for (AlunoEntity aluno :listaDeAlunos){
+            alunosId.add(aluno.getId());
+        }
+        return ResponseEntity.ok(new TurmaResponse(turma.getId(),turma.getNome(),alunosId,turma.getProfessor().getId(), turma.getId_curso().getId()));
     }
 
     @DeleteMapping("/{id}")
@@ -59,9 +65,19 @@ public class TurmaController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TurmaEntity>> listarTodos(JwtAuthenticationToken jwt){
+    public ResponseEntity<List<TurmaResponse>> listarTodos(JwtAuthenticationToken jwt){
         List<TurmaEntity> listaDeTurmas = facade.listarTodos(jwt);
+        List<TurmaResponse> listaDeTurmasDto = new ArrayList<>();
         log.info("Todos os alunos listados com sucesso!");
-        return ResponseEntity.ok(listaDeTurmas);
+        for (TurmaEntity turma : listaDeTurmas){
+            List<AlunoEntity> listaDeAlunos = turma.getAlunos();
+            List<Long> alunosId = new ArrayList<>();
+            for (AlunoEntity aluno :listaDeAlunos){
+                alunosId.add(aluno.getId());
+            }
+            TurmaResponse dto = new TurmaResponse(turma.getId(),turma.getNome(),alunosId,turma.getProfessor().getId(), turma.getId_curso().getId());
+            listaDeTurmasDto.add(dto);
+        }
+        return ResponseEntity.ok(listaDeTurmasDto);
     }
 }

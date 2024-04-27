@@ -1,12 +1,10 @@
 package com.educa100.facade;
 
 import com.educa100.controller.dto.request.TurmaRequest;
-import com.educa100.controller.dto.response.TurmaResponse;
 import com.educa100.datasource.entity.*;
 import com.educa100.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
