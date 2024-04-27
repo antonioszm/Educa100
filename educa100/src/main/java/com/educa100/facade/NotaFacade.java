@@ -9,6 +9,7 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -73,8 +74,11 @@ public class NotaFacade {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Materia é nullo");
         }
         nota.setId_materia(materiaValido);
-
-        nota.setData(request.data());
+        if (request.data() == null){
+            nota.setData(LocalDate.now());
+        } else {
+            nota.setData(request.data());
+        }
         nota.setValor(request.valor());
         service.salvar(nota);
 
@@ -129,7 +133,11 @@ public class NotaFacade {
         }
         nota.setId_materia(materiaValido);
 
-        nota.setData(request.data());
+        if (request.data() == null){
+            nota.setData(nota.getData());
+        } else {
+            nota.setData(request.data());
+        }
         nota.setValor(request.valor());
 
         service.atualizar(nota.getId());
