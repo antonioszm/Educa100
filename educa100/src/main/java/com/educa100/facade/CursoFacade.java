@@ -1,8 +1,6 @@
 package com.educa100.facade;
 
 import com.educa100.controller.dto.request.CursoRequest;
-import com.educa100.controller.dto.request.TurmaRequest;
-import com.educa100.controller.dto.response.CursoResponse;
 import com.educa100.datasource.entity.CursoEntity;
 import com.educa100.datasource.entity.MateriaEntity;
 import com.educa100.datasource.entity.TurmaEntity;
@@ -13,10 +11,8 @@ import com.educa100.service.TurmaServiceImpl;
 import com.educa100.service.UsuarioServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
@@ -149,7 +145,7 @@ public class CursoFacade {
         return listaCursos;
     }
 
-    public List<MateriaEntity> listaCursoId(Long id){
+    public List<MateriaEntity> listarMateriasPorIdCurso(Long id){
         List<MateriaEntity> listaMaterias = materiaService.listarPorIdCurso(id);
         if (listaMaterias.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Não ha materias no curso para listar");

@@ -1,4 +1,6 @@
 package com.educa100.controller.dto.response;
 
-public record DocenteResponse(Long id_docente) {
+import java.time.LocalDate;
+
+public record DocenteResponse(Long id, String nome, LocalDate dataEntrada, Long usuario, Long idPapel) {
 }

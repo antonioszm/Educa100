@@ -1,12 +1,10 @@
 package com.educa100.controller;
 
 import com.educa100.controller.dto.request.LoginResquest;
-import com.educa100.controller.dto.request.UsuarioRequest;
 import com.educa100.controller.dto.response.LoginResponse;
 import com.educa100.datasource.repository.UsuarioRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;

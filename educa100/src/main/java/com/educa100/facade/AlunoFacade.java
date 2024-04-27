@@ -1,7 +1,6 @@
 package com.educa100.facade;
 
 import com.educa100.controller.dto.request.AlunoRequest;
-import com.educa100.controller.dto.response.AlunoResponse;
 import com.educa100.datasource.entity.AlunoEntity;
 import com.educa100.datasource.entity.NotaEntity;
 import com.educa100.datasource.entity.TurmaEntity;
@@ -11,12 +10,9 @@ import com.educa100.service.NotaServiceImpl;
 import com.educa100.service.TurmaServiceImpl;
 import com.educa100.service.UsuarioServiceImpl;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -180,7 +176,7 @@ public final class AlunoFacade {
         return ((pontuacao/numeroDeMaterias)*10);
     }
 
-    public List<NotaEntity> listaAlunoId(Long id_aluno,JwtAuthenticationToken jwt){
+    public List<NotaEntity> listarNotasPorAluno(Long id_aluno, JwtAuthenticationToken jwt){
         UsuarioEntity usuarioLogado = usuarioService.listarPorId(Long.valueOf(jwt.getName()));
         List<NotaEntity> listaNotas = notaService.listarPorIdAluno(id_aluno);
         AlunoEntity aluno = service.listarPorId(id_aluno);

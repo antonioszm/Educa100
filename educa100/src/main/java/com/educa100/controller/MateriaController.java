@@ -1,17 +1,10 @@
 package com.educa100.controller;
 
-import com.educa100.controller.dto.request.CursoRequest;
 import com.educa100.controller.dto.request.MateriaRequest;
-import com.educa100.controller.dto.request.TurmaRequest;
-import com.educa100.controller.dto.response.AlunoResponse;
-import com.educa100.controller.dto.response.CursoResponse;
 import com.educa100.controller.dto.response.MateriaResponse;
+import com.educa100.controller.dto.response.creation.MateriaCreationResponse;
 import com.educa100.datasource.entity.*;
 import com.educa100.facade.MateriaFacade;
-import com.educa100.service.CursoServiceImpl;
-import com.educa100.service.MateriaService;
-import com.educa100.service.MateriaServiceImpl;
-import com.educa100.service.TurmaServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +14,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/materias")
@@ -36,25 +28,25 @@ public class MateriaController {
 
 
     @PostMapping
-    public ResponseEntity<MateriaResponse> criarMateria(@RequestBody MateriaRequest request, JwtAuthenticationToken jwt){
+    public ResponseEntity<MateriaCreationResponse> criarMateria(@RequestBody MateriaRequest request, JwtAuthenticationToken jwt){
         MateriaEntity materia = facade.criarMateria(request, jwt);
         log.info("Materia cirado com sucesso!");
-        return ResponseEntity.created(null).body(new MateriaResponse(materia.getId()));
+        return ResponseEntity.created(null).body(new MateriaCreationResponse(materia.getId()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MateriaEntity> listarPorId(@PathVariable Long id,JwtAuthenticationToken jwt){
+    public ResponseEntity<MateriaResponse> listarPorId(@PathVariable Long id,JwtAuthenticationToken jwt){
         log.info("Materia com {id} foi listado" + id);
         MateriaEntity materia = facade.listarPorId(id, jwt);
 
-        return ResponseEntity.ok(materia);
+        return ResponseEntity.ok(new MateriaResponse(materia.getId(), materia.getNome(), materia.getId_curso().getId()));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MateriaEntity> atualizar(@PathVariable Long id, @RequestBody MateriaRequest request,JwtAuthenticationToken jwt){
+    public ResponseEntity<MateriaResponse> atualizar(@PathVariable Long id, @RequestBody MateriaRequest request,JwtAuthenticationToken jwt){
         MateriaEntity materia = facade.atualizar(id, request, jwt);
         log.info("Materia atualizado com sucesso!");
-        return ResponseEntity.ok(materia);
+        return ResponseEntity.ok(new MateriaResponse(materia.getId(), materia.getNome(), materia.getId_curso().getId()));
     }
 
     @DeleteMapping("/{id}")
@@ -65,9 +57,14 @@ public class MateriaController {
     }
 
     @GetMapping
-    public ResponseEntity<List<MateriaEntity>> listarTodos(JwtAuthenticationToken jwt){
-        List<MateriaEntity> listaDeMateria = facade.listarTodos(jwt);
+    public ResponseEntity<List<MateriaResponse>> listarTodos(JwtAuthenticationToken jwt){
+        List<MateriaEntity> listaDeMaterias = facade.listarTodos(jwt);
         log.info("Todas as Materias listadas com sucesso!");
-        return ResponseEntity.ok(listaDeMateria);
+        List<MateriaResponse> listaMateriasDto = new ArrayList<>();
+        for (MateriaEntity materia : listaDeMaterias){
+            MateriaResponse dto = new MateriaResponse(materia.getId(), materia.getNome(), materia.getId_curso().getId());
+            listaMateriasDto.add(dto);
+        }
+        return ResponseEntity.ok(listaMateriasDto);
     }
 }
