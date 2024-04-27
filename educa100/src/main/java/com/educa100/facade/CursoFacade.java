@@ -87,7 +87,7 @@ public class CursoFacade {
         return curso;
     }
 
-    public CursoEntity atualizar(Long id, TurmaRequest request, JwtAuthenticationToken jwt){
+    public CursoEntity atualizar(Long id, CursoRequest request, JwtAuthenticationToken jwt){
         UsuarioEntity usuarioLogado = usuarioService.listarPorId(Long.valueOf(jwt.getName()));
         if (usuarioLogado.getId_papel().getId() == 5){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores ou  Docentes podem listar cursos");
@@ -99,6 +99,9 @@ public class CursoFacade {
             if (c.getNome().equals(request.nome())){
                 nomeEmUso = true;
             }
+        }
+        if (request.nome().equals(curso.getNome())){
+            nomeEmUso = false;
         }
         if (!request.nome().isBlank() && !nomeEmUso){
             curso.setNome(request.nome());

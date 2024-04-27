@@ -104,6 +104,9 @@ public class DocenteFacade {
                 nomeEmUso = true;
             }
         }
+        if (request.nome().equals(docente.getNome())){
+            nomeEmUso = false;
+        }
         if (!request.nome().isBlank() && !nomeEmUso){
             docente.setNome(request.nome());
         } else {
