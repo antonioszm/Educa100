@@ -63,6 +63,10 @@ public class NotaFacade {
             log.error("Docente é nullo");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Docente é nullo");
         }
+        if (usuarioLogado.getId_papel().getId() == 4 && !docenteValido.getId_usuario().equals(usuarioLogado)){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Você só pode atribuir notas relacionadas com você");
+        }
+
         nota.setId_professor(docenteValido);
 
         Optional<MateriaEntity> materia = Optional.ofNullable(materiaService.listarPorId(request.id_materia()));
@@ -96,7 +100,7 @@ public class NotaFacade {
 
     public NotaEntity atualizar(Long id,NotaRequest request, JwtAuthenticationToken jwt){
         UsuarioEntity usuarioLogado = usuarioService.listarPorId(Long.valueOf(jwt.getName()));
-        if (usuarioLogado.getId_papel().getId() != 1 && usuarioLogado.getId_papel().getId() != 5){
+        if (usuarioLogado.getId_papel().getId() == 5 || usuarioLogado.getId_papel().getId() == 3 || usuarioLogado.getId_papel().getId() == 2){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores ou o professores atualizar notas");
         }
 
@@ -120,6 +124,9 @@ public class NotaFacade {
         }else{
             log.error("Docente é nullo");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Docente é nullo");
+        }
+        if (usuarioLogado.getId_papel().getId() == 4 && !docenteValido.getId_usuario().equals(usuarioLogado)){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Você só pode atulizar notas relacionadas com você");
         }
         nota.setId_professor(docenteValido);
 

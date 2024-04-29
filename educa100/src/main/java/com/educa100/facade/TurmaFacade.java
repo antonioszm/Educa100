@@ -75,6 +75,9 @@ public class TurmaFacade {
             log.error("Docente é nullo");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Docente é nullo");
         }
+        if (usuarioLogado.getId_papel().getId() == 4 && !docenteValido.getId_usuario().equals(usuarioLogado)){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Você só pode criar turmas relacionadas com você");
+        }
         turma.setProfessor(docenteValido);
         Optional<CursoEntity> curso = Optional.ofNullable(cursoService.listarPorId(request.id_curso()));
         CursoEntity cursoValido = null;
@@ -110,7 +113,7 @@ public class TurmaFacade {
     public TurmaEntity atualizar(Long id,TurmaRequest request,JwtAuthenticationToken jwt){
         UsuarioEntity usuarioLogado = usuarioService.listarPorId(Long.valueOf(jwt.getName()));
         TurmaEntity turma = service.listarPorId(id);
-        if (!turma.getProfessor().equals(usuarioLogado) &&  usuarioLogado.getId_papel().getId() != 1){
+        if (!turma.getProfessor().getId_usuario().equals(usuarioLogado) &&  usuarioLogado.getId_papel().getId() != 1){
                 throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Você não é autorizado a atualizar a turma");
         }
         Optional<DocenteEntity> docente = Optional.ofNullable(docenteService.listarPorId(request.id_professor()));
@@ -120,6 +123,9 @@ public class TurmaFacade {
         }else{
             log.error("Docente é nullo");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Docente é nullo");
+        }
+        if (usuarioLogado.getId_papel().getId() == 4 && !docenteValido.getId_usuario().equals(usuarioLogado)){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Você só pode atualizar turmas relacionadas com você");
         }
         Optional<CursoEntity> curso = Optional.ofNullable(cursoService.listarPorId(request.id_curso()));
         CursoEntity cursoValido = null;
@@ -163,6 +169,12 @@ public class TurmaFacade {
         UsuarioEntity usuarioLogado = usuarioService.listarPorId(Long.valueOf(jwt.getName()));
         if (usuarioLogado.getId_papel().getId() != 1){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores podem deletar alunos");
+        }
+        TurmaEntity turma = service.listarPorId(id);
+        for (AlunoEntity aluno : alunoService.listarTodos()){
+            if (turma.equals(aluno.getId_turma())){
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ERRO, não foi possivel deletar pois existem alunos relacionadas com o turma");
+            }
         }
         service.removerPorId(id);
         throw new ResponseStatusException(HttpStatus.NO_CONTENT);

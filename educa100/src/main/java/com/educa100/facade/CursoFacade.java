@@ -1,10 +1,7 @@
 package com.educa100.facade;
 
 import com.educa100.controller.dto.request.CursoRequest;
-import com.educa100.datasource.entity.CursoEntity;
-import com.educa100.datasource.entity.MateriaEntity;
-import com.educa100.datasource.entity.TurmaEntity;
-import com.educa100.datasource.entity.UsuarioEntity;
+import com.educa100.datasource.entity.*;
 import com.educa100.service.CursoServiceImpl;
 import com.educa100.service.MateriaServiceImpl;
 import com.educa100.service.TurmaServiceImpl;
@@ -128,6 +125,17 @@ public class CursoFacade {
         UsuarioEntity usuarioLogado = usuarioService.listarPorId(Long.valueOf(jwt.getName()));
         if (usuarioLogado.getId_papel().getId() != 1){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores podem deletar cursos");
+        }
+        CursoEntity curso = service.listarPorId(id);
+        for (MateriaEntity materia : materiaService.listarTodos()){
+            if (curso.equals(materia.getId_curso())){
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ERRO, não foi possivel deletar pois existem materias relacionadas com o curso");
+            }
+        }
+        for (TurmaEntity turma : turmaService.listarTodos()){
+            if (curso.equals(turma.getId_curso())){
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ERRO, não foi possivel deletar pois existem turmas relacionadas com o curso");
+            }
         }
         service.removerPorId(id);
         throw new ResponseStatusException(HttpStatus.NO_CONTENT);
