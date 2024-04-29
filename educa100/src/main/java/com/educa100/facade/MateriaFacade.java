@@ -1,11 +1,10 @@
 package com.educa100.facade;
 
 import com.educa100.controller.dto.request.MateriaRequest;
-import com.educa100.datasource.entity.CursoEntity;
-import com.educa100.datasource.entity.MateriaEntity;
-import com.educa100.datasource.entity.UsuarioEntity;
+import com.educa100.datasource.entity.*;
 import com.educa100.service.CursoServiceImpl;
 import com.educa100.service.MateriaServiceImpl;
+import com.educa100.service.NotaServiceImpl;
 import com.educa100.service.UsuarioServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -24,12 +23,14 @@ public class MateriaFacade {
 
     private final CursoServiceImpl cursoService;
     private final UsuarioServiceImpl usuarioService;
+    private final NotaServiceImpl notaService;
 
 
-    public MateriaFacade(MateriaServiceImpl service, CursoServiceImpl cursoService, UsuarioServiceImpl usuarioService) {
+    public MateriaFacade(MateriaServiceImpl service, CursoServiceImpl cursoService, UsuarioServiceImpl usuarioService, NotaServiceImpl notaService) {
         this.service = service;
         this.cursoService = cursoService;
         this.usuarioService = usuarioService;
+        this.notaService = notaService;
     }
 
 
@@ -112,6 +113,12 @@ public class MateriaFacade {
         UsuarioEntity usuarioLogado = usuarioService.listarPorId(Long.valueOf(jwt.getName()));
         if (usuarioLogado.getId_papel().getId()  != 1){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores podem deletar materias");
+        }
+        MateriaEntity materia = service.listarPorId(id);
+        for (NotaEntity nota : notaService.listarTodos()){
+            if (materia.equals(nota.getId_materia())){
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ERRO, não foi possivel deletar pois existem notas relacionadas com o materia");
+            }
         }
         service.removerPorId(id);
         throw new ResponseStatusException(HttpStatus.NO_CONTENT);

@@ -1,9 +1,10 @@
 package com.educa100.facade;
 
 import com.educa100.controller.dto.request.DocenteRequest;
-import com.educa100.datasource.entity.DocenteEntity;
-import com.educa100.datasource.entity.UsuarioEntity;
+import com.educa100.datasource.entity.*;
 import com.educa100.service.DocenteServiceImpl;
+import com.educa100.service.NotaServiceImpl;
+import com.educa100.service.TurmaServiceImpl;
 import com.educa100.service.UsuarioServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -21,9 +22,13 @@ public class DocenteFacade {
 
     private final DocenteServiceImpl service;
     private final UsuarioServiceImpl usuarioService;
-    public DocenteFacade(DocenteServiceImpl service, UsuarioServiceImpl usuarioService) {
+    private final NotaServiceImpl notaService;
+    private final TurmaServiceImpl turmaService;
+    public DocenteFacade(DocenteServiceImpl service, UsuarioServiceImpl usuarioService, NotaServiceImpl notaService, TurmaServiceImpl turmaService) {
         this.service = service;
         this.usuarioService = usuarioService;
+        this.notaService = notaService;
+        this.turmaService = turmaService;
     }
 
     public DocenteEntity criarDocente(DocenteRequest request, JwtAuthenticationToken jwt){
@@ -43,7 +48,7 @@ public class DocenteFacade {
             docente.setNome(request.nome());
         } else {
             log.error("Nome Invalido");
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Nome Invalido");
         }
         if (request.dataEntrada() == null){
             docente.setData_entrada(LocalDate.now());
@@ -128,6 +133,17 @@ public class DocenteFacade {
         UsuarioEntity usuarioLogado = usuarioService.listarPorId(Long.valueOf(jwt.getName()));
         if (usuarioLogado.getId_papel().getId() != 1){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores podem deletar docentes");
+        }
+        DocenteEntity professor = service.listarPorId(id);
+        for (NotaEntity nota : notaService.listarTodos()){
+            if (professor.equals(nota.getId_professor())){
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ERRO, não foi possivel deletar pois existem notas relacionadas com o professor");
+            }
+        }
+        for (TurmaEntity turma : turmaService.listarTodos()){
+            if (professor.equals(turma.getProfessor())){
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ERRO, não foi possivel deletar pois existem turmas relacionadas com o professor");
+            }
         }
         service.removerPorId(id);
         throw new ResponseStatusException(HttpStatus.NO_CONTENT);

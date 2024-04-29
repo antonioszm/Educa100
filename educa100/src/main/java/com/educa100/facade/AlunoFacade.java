@@ -89,11 +89,11 @@ public final class AlunoFacade {
 
     public AlunoEntity listarPorId(Long id,JwtAuthenticationToken jwt) throws Exception {
         UsuarioEntity usuarioLogado = usuarioService.listarPorId(Long.valueOf(jwt.getName()));
-        if (usuarioLogado.getId_papel().getId() != 1  || usuarioLogado.getId_papel().getId() != 5){
+        if (usuarioLogado.getId_papel().getId() != 1  && usuarioLogado.getId_papel().getId() != 5){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores ou alunos podem listar alunos");
         }
         AlunoEntity aluno = service.listarPorId(id);
-        if (usuarioLogado.getId_papel().getId() != 1  || aluno.getId_usuario().getId().equals((usuarioLogado.getId()))){
+        if (usuarioLogado.getId_papel().getId() != 1  && !usuarioLogado.getId_papel().equals(aluno.getId_usuario().getId_papel())){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores ou o próprio alunos podem se listar");
         }
         return aluno;
@@ -153,6 +153,12 @@ public final class AlunoFacade {
         if (usuarioLogado.getId_papel().getId() != 1 ){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ACESSO NEGADO, só adiministradores podem deletar alunos");
         }
+        AlunoEntity aluno = service.listarPorId(id);
+        for (NotaEntity nota : notaService.listarTodos()){
+            if (aluno.equals(nota.getId_aluno())){
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ERRO, não foi possivel deletar pois existem notas relacionadas com o aluno");
+            }
+        }
         service.removerPorId(id);
         throw new ResponseStatusException(HttpStatus.NO_CONTENT);
     }
@@ -174,7 +180,7 @@ public final class AlunoFacade {
         UsuarioEntity usuarioLogado = usuarioService.listarPorId(Long.valueOf(jwt.getName()));
         AlunoEntity aluno = service.listarPorId(id);
         List<NotaEntity> listaNotas = notaService.listarPorIdAluno(id);
-        if (service.listarPorId(id) == null || usuarioLogado.getId().equals(aluno.getId_usuario().getId())){
+        if (service.listarPorId(id) == null || !usuarioLogado.getId().equals(aluno.getId_usuario().getId())){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         int numeroDeMaterias = service.listarPorId(id).getId_turma().getId_curso().getMaterias().size();
@@ -189,7 +195,7 @@ public final class AlunoFacade {
         UsuarioEntity usuarioLogado = usuarioService.listarPorId(Long.valueOf(jwt.getName()));
         List<NotaEntity> listaNotas = notaService.listarPorIdAluno(id_aluno);
         AlunoEntity aluno = service.listarPorId(id_aluno);
-        if (listaNotas.isEmpty() || usuarioLogado.getId().equals(aluno.getId_usuario().getId()) ){
+        if (listaNotas.isEmpty() || !usuarioLogado.getId().equals(aluno.getId_usuario().getId()) ){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         return listaNotas;
