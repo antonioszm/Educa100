@@ -1,0 +1,1283 @@
+{
+	"info": {
+		"_postman_id": "847bc56c-bf69-4f21-afa9-31200ef978f5",
+		"name": "Projeto",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33277051"
+	},
+	"item": [
+		{
+			"name": "Login/Cadastro",
+			"item": [
+				{
+					"name": "Login",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\": \"aluno\",\r\n    \"senha\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cadastro",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJCYWNrZW5kIiwic3ViIjoiMSIsImV4cCI6MTcxNDM1ODk1NiwiaWF0IjoxNzE0MzU4NjU2fQ.cFEZIJEj5qRFXGE8daeZc9PCUnO3cPc9zWweO1-0UpEGj93TI5DijffaEss-p9uAhvBGI-N28H9rhuzDbJ0IlsgPDE7fpB4b32pBl_L5OTH_EbKuBnWc1NvWeBGSUx8bFcxG5KwbbkvjO-6VlG4jNCvgTmSyGJ8qfrGF6wwPezVCBP1r-APjcGHKw4kalrYjkC_G6qA7SeFmZ6peCz4EyvbPmAW80uViDeXcEDx6UtlYAYLIZhQFa2GRMGl2mGBOEq_k-D1hA6upJ3R2pq0osvk89W3Cyn750oblQtV0UPKhYMn3E-YsmBhgq_iVueFd6SlRdKJU_EmBiUA9NR3U2A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\": \"aluno\",\r\n    \"senha\": \"123\",\r\n    \"id_papel\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/cadastro",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cadastro"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Docente",
+			"item": [
+				{
+					"name": "Criar Docente",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJCYWNrZW5kIiwic3ViIjoiMSIsImV4cCI6MTcxNDM1ODU0NCwiaWF0IjoxNzE0MzU4MjQ0fQ.H79vAKheYttkbUUTxvyIfqq31I31udOkHZMqi2Lry2NzFKHj1LLV2dDwS5sosZa8A3rC33aJCeFHKa2LIyUbQLJSic1n3ELHm98Kt9WXQhJk246wbrY-2vIJyogwJtFbAoTzf1yVSqXhdVgU6TTDQYT29gq7DcmSwkift943gYIgq3lpduH3sgN42iALj8Ra0RHirQI5nqR-GX3nkZsRINAJe4GLELIaldWcel-hWEDCTfGUpE7GaDpaV8Q3OeAQ1WOXzZYLlq-rp76ulmHn8krj2cYss-XVa1RZkJfFwRxN0KFNc6KUilQG44RVPvrV61TgWC2Qv4B2isfLlAXpyQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"prof\",\r\n    \"id_usuario\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/docentes",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"docentes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Por Id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJCYWNrZW5kIiwic3ViIjoiNSIsImV4cCI6MTcxNDM0NjYxOCwiaWF0IjoxNzE0MzQ2MzE4fQ.hKGSK71X5MEP5mB5oKkgLjXbRvJRVdcIMsCapXKIe1mTmefv4FX_aKzyTJRoBtstylfdoC7aN4jmRhPp8aqUvLXxLathZZpO_VijksJW0D55ebGgeHiIIVtrfwUCu64Xf1jYvGIDbsUHL90NthPSonz9mn8lv8_gRZpW4UmyIej4Tv2NK7RLHr8Dsu4F48E57A77SvFGxTGeYfAotsRSih2rUokHOjtXMiY2LXGU_Xz3HetwHZ82bBJRVdyC3f4rGalW9lE1TUX5pIz77DAC3saF3ggI9XBfUp9oUnSRrosTrWXrLfIn4IclZ_5B-1zAinWF2jcSpRAdd-OaueBB-w",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/docentes/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"docentes",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AtualizarPor Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJCYWNrZW5kIiwic3ViIjoiMSIsImV4cCI6MTcxNDI1Njc1MCwiaWF0IjoxNzE0MjU2NDUwfQ.byuqvH3B2wMeWn-ifjlaoa36-EnelES_bq6_1WqvJmS3GOHH-zGJCNnbpaIcxSK6aLoeNOHoin5qpSg92m6ka2ddJukLfQkc5AOkYMF2i1QXkCjBNjUtUcqxGncZnUrf9PN7bottQzOaMcerxTDjGl1pm92udRvOKqFFNdZagfv5AIo-IE9mo0UicA7gX7-1KinmQQAxldqrZet8zhTWB_tPLXS6PKom6JNn5nS8bQlWPnjl0gloy8GS4s8YO_XtGqecqn--iN23Jf9LwpQ4p7ocua6qOObnPh15OAkxCAuPrjrk7Cg6VJAEzeHYnelFIARiehC-sUoqAQnc7ZWGrw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\" : \"andre\",\r\n    \"dataEntrada\" : \"2024-04-18\",\r\n    \"id_usuario\" : 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/docentes/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"docentes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar Por Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJCYWNrZW5kIiwic3ViIjoiMSIsImV4cCI6MTcxNDM0MTE0MiwiaWF0IjoxNzE0MzQwODQyfQ.dLzat0A2FAl2C7WD7b9EI1zDj8noWqRDedJQi3uqCjmDZPManRpt7iVQZEghe9ILdz36EMjWI8NTZXBJblfBcIzzBu6a8XLUoDzRQuW9cfTkj_o6dmSD3xiSriHinyhPjUYBL6FXf1kVEvrs8osDjvwFl6guZOL1jNibbPec2srecZCy-1_i9kinThLUIG-NFRB1w_6q3HkOfRjZWjVRPKWlCQazSLpD2s9Uv3dvEbn3okyBOBjhWrjbQ052JtDOZbG7GtodVlVqhjp5TxOWJeKY1MXcDOwD70WTS4UugApXWl2MB0wLq-20d_O-9NxDkAunakOsuRjDHAZMwpHVrw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/docentes/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"docentes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ListarTodos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJCYWNrZW5kIiwic3ViIjoiMSIsImV4cCI6MTcxNDI1Njc1MCwiaWF0IjoxNzE0MjU2NDUwfQ.byuqvH3B2wMeWn-ifjlaoa36-EnelES_bq6_1WqvJmS3GOHH-zGJCNnbpaIcxSK6aLoeNOHoin5qpSg92m6ka2ddJukLfQkc5AOkYMF2i1QXkCjBNjUtUcqxGncZnUrf9PN7bottQzOaMcerxTDjGl1pm92udRvOKqFFNdZagfv5AIo-IE9mo0UicA7gX7-1KinmQQAxldqrZet8zhTWB_tPLXS6PKom6JNn5nS8bQlWPnjl0gloy8GS4s8YO_XtGqecqn--iN23Jf9LwpQ4p7ocua6qOObnPh15OAkxCAuPrjrk7Cg6VJAEzeHYnelFIARiehC-sUoqAQnc7ZWGrw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/docentes",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"docentes"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Turma",
+			"item": [
+				{
+					"name": "Criar Turma",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJCYWNrZW5kIiwic3ViIjoiMSIsImV4cCI6MTcxNDM1ODExNSwiaWF0IjoxNzE0MzU3ODE1fQ.j_PGWx0WTgKk9_N_Dr52RNlNrNTXmrHwnZ7Q4gs2LqL9fb1rZe9jZ_CfTnPfOHgvitzWkGqIl3gGfHgXcN-3oKBvP4aDqqk7_VPwDh3K5RjQuB1BwYZBYH10xO2rivprXXrvVPnJ_LxWV1Ir4wlRmxsy94y9wZ5yJmFXIiJs3kd2_kYIt2VtqPZkfqcWJ-jUFqrKZuDnUjgikz-CyDeTamc1rBHHtHSJEC3Q3PPVdojpzv4pKsMmeqyEQflzrRGUq9rW_qLe6w8m4vGGF3n4K3BUp6JqGDoG41QB9FpdHl1W9NxD42Z-0h_FWc1L1ripaGYkQCrmNII4KPP3gmOwBw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"B\",\r\n    \"id_professor\": 1,\r\n    \"id_curso\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/turmas",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"turmas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Por Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJCYWNrZW5kIiwic3ViIjoiMiIsImV4cCI6MTcxNDM0NzM5NywiaWF0IjoxNzE0MzQ3MDk3fQ.TC11RHxD2Op8uMJuMBFH5lEVK1tesCPJMRwIF7j2tQsAQQipPYcQ_mu4CfPyEGgTV-rK8EOyrE6U3vTazEKhlFEI9R4lJs0mCWU1c0xoDiFxegHSmSfSt_DjkLYlmhsyvmH9fxKw809635FsTiTajKXcsl8RWK1uDcAVYOVDSOPT3I6nJXFXfW8V1C4YgNyEIjtbkb8KEKkwnrHKLyHXscTkrHElX1wa27agIwhNBBDj4s9BZenIA0md2I_wnxk2W3KY_iooP82eVeQ0zmKGiZ6hqTUa5zk0nYK5P35zqHt2Jj54ZHFVr3wf2OTYlzPVz-Ist7x1O62kQQQ9P3AZ_A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/turmas/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"turmas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AtualizarPor Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJCYWNrZW5kIiwic3ViIjoiMiIsImV4cCI6MTcxNDM1ODc2MiwiaWF0IjoxNzE0MzU4NDYyfQ.VmhFY7DqxVV9sWs7qP21ffut0pJgHjH5_Swdaz_7mxp4ienvncZrotf-AIrSe7uSEKPtiCnw0dGZlAs3O1TNo03RMOiGrA4TquposIifaMqybRrjO1ZosDD0JbNQqNyeUdpU1C5TaQdd00FjKlB0Yqo64bf9eASdPbafjshwnqcrku2JqKj7z4-mUs9K-65GnXtxcIZlOacbgu2PMkVg-getgGO9g2sa0UP1uDHg2R0_QX9XG5BmE_H_KJfFKlBvxGuNS21QSh2umnejS1c1Gd0baxBcbOJyHdx23QnrJbSpXhhd69JLCKA7KthVD75gVYZBBYCNQatRkZqzUzUorQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"TurmaB\",\r\n    \"id_professor\": 1,\r\n    \"id_curso\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/turmas/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"turmas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar Por Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJCYWNrZW5kIiwic3ViIjoiMSIsImV4cCI6MTcxNDM0MTE0MiwiaWF0IjoxNzE0MzQwODQyfQ.dLzat0A2FAl2C7WD7b9EI1zDj8noWqRDedJQi3uqCjmDZPManRpt7iVQZEghe9ILdz36EMjWI8NTZXBJblfBcIzzBu6a8XLUoDzRQuW9cfTkj_o6dmSD3xiSriHinyhPjUYBL6FXf1kVEvrs8osDjvwFl6guZOL1jNibbPec2srecZCy-1_i9kinThLUIG-NFRB1w_6q3HkOfRjZWjVRPKWlCQazSLpD2s9Uv3dvEbn3okyBOBjhWrjbQ052JtDOZbG7GtodVlVqhjp5TxOWJeKY1MXcDOwD70WTS4UugApXWl2MB0wLq-20d_O-9NxDkAunakOsuRjDHAZMwpHVrw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/turmas/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"turmas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ListarTodos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJCYWNrZW5kIiwic3ViIjoiNSIsImV4cCI6MTcxNDM0NzM1NywiaWF0IjoxNzE0MzQ3MDU3fQ.lgFrVrJ-q-QdmPj1MUHlNafeGrQHFzLuNp6fkRLaDftcglVZfPIlGBIIWA3-QHWAvXmrV6djcWvqdh7Pz0DJohOXoRtm5ElBFsCsUwVzUec92cGE-RiChZZ6gfb0pvpYtUbjcKL0ZYJjI9sZ7qREC6IEeUreRGZk8H8HVAD0e2MKxV9x_KO8kJBwK4wDZNV0Q_uguAGeWyB1bpo0RhDpFX1-4vKw85Oj73YXkLMPIApvjskIWplitRUksgkOpU8nhIPTx2cUtHpzM-1OuTGf6QbkNudlZKbincvei4LmYUkxiCc73ZStUEWwmXuRGm4_Ja9D9vh1mXvsogCCyB4FGg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/turmas",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"turmas"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Aluno",
+			"item": [
+				{
+					"name": "Criar Aluno",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJCYWNrZW5kIiwic3ViIjoiMSIsImV4cCI6MTcxNDM1ODk1NiwiaWF0IjoxNzE0MzU4NjU2fQ.cFEZIJEj5qRFXGE8daeZc9PCUnO3cPc9zWweO1-0UpEGj93TI5DijffaEss-p9uAhvBGI-N28H9rhuzDbJ0IlsgPDE7fpB4b32pBl_L5OTH_EbKuBnWc1NvWeBGSUx8bFcxG5KwbbkvjO-6VlG4jNCvgTmSyGJ8qfrGF6wwPezVCBP1r-APjcGHKw4kalrYjkC_G6qA7SeFmZ6peCz4EyvbPmAW80uViDeXcEDx6UtlYAYLIZhQFa2GRMGl2mGBOEq_k-D1hA6upJ3R2pq0osvk89W3Cyn750oblQtV0UPKhYMn3E-YsmBhgq_iVueFd6SlRdKJU_EmBiUA9NR3U2A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"aluno2\",\r\n    \"dataNascimento\" : \"2024-04-18\",\r\n    \"id_usuario\": 2,\r\n    \"id_turma\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/alunos",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"alunos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Por Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJCYWNrZW5kIiwic3ViIjoiMiIsImV4cCI6MTcxNDM1OTA3MiwiaWF0IjoxNzE0MzU4NzcyfQ.ZuzY3UFLN32F84a2hLEwsrraFyqF9uhYzHM0betozoK2RobM8HO7kbODid6xwHYd8dinxS8Ibt410AfuwaALI9he-QTu_wE59Lr8M8eDrfxuwXXa9Phhy3PMzFTcau4jxwGeKq7niA7HogWZL9OkpTEF5pq1dVknt_SiZ2_4Me4aoVXgnr1Ru3pGt2n3kgNl8Q3wrbmCxT9oXLnUCPU7vK5ghQ_EiYlg6gQG7Cje-yno_oQLRZbJLmrq4nYeVeOVLRhm4O3nyDsmWmClRvhu3Yjmczmr2K2kBaXOMKJ78rlbFx-Yv9-iUJDLZ-FIgt-FmYs2HCc10ja3Rmi1raxIzQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/alunos/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"alunos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AtualizarPor Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJCYWNrZW5kIiwic3ViIjoiMiIsImV4cCI6MTcxNDM0MzQ3MCwiaWF0IjoxNzE0MzQzMTcwfQ.EUX8lt9mdP3kf0EABc6ctoOfpvsKqhx7IzoffaL8-QTdeKg6RylqQLBfkV2xEtjwgJ4vqLJQFvzWQWzPxfG1DSCD445qiGUEcKlQtwJE3htbQmEicZ4D0OZJxQs4LYTtet7gMEoeK0t9CTrzdXAQb7CXpo-P5IPoDRgft5JiPVVQG_1-fJVg1iktCHtQxATNJL5KWV0f7lCJnO7DbG2TJKv5Y-joay7SkxBWCIALwtVgVYTHLYSVPGVWgyJylhYPXnkVN7B6pLmVF58oTzpzl3Q0ynueL-fg-8AYUZrm7sZ8Lt4EO5eo3qfHNpHEnSZorvJhg0mwpV1hNh_qmDN-zQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\" : \"gabriel\",\r\n    \"dataNascimento\" : \"2024-04-18\",\r\n    \"id_usuario\" : 2,\r\n    \"id_turma\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/alunos/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"alunos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar Por Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJCYWNrZW5kIiwic3ViIjoiMSIsImV4cCI6MTcxNDM0MTE0MiwiaWF0IjoxNzE0MzQwODQyfQ.dLzat0A2FAl2C7WD7b9EI1zDj8noWqRDedJQi3uqCjmDZPManRpt7iVQZEghe9ILdz36EMjWI8NTZXBJblfBcIzzBu6a8XLUoDzRQuW9cfTkj_o6dmSD3xiSriHinyhPjUYBL6FXf1kVEvrs8osDjvwFl6guZOL1jNibbPec2srecZCy-1_i9kinThLUIG-NFRB1w_6q3HkOfRjZWjVRPKWlCQazSLpD2s9Uv3dvEbn3okyBOBjhWrjbQ052JtDOZbG7GtodVlVqhjp5TxOWJeKY1MXcDOwD70WTS4UugApXWl2MB0wLq-20d_O-9NxDkAunakOsuRjDHAZMwpHVrw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/alunos/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"alunos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ListarTodos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJCYWNrZW5kIiwic3ViIjoiMSIsImV4cCI6MTcxNDI1ODE0OCwiaWF0IjoxNzE0MjU3ODQ4fQ.kbKRVD9E_IZu0K6lBIBG4Q73ZmNRGG87KGNKlublyP-GnqdcEQNLzJ7A_Zj9sHH6fSF49cUdBKWqt7TF5pssh3YjPcph1DKosdyN_KjpKIaz0P54gL6ma18_ZdMAxSCbk5uPLJBFLkeItGZlQx0XT0AYrAa79n7gBLbXyE1dR0BLPCehcaPybBm9sL1NlmuMgvSb018wteWtCQDn6CAuFqphbWU8tuS1tu1SGRy8ALA5pHwUhyOiomwZ9ALJ1yPEYQG9YcUC5husziVk54sli7IbZfMy4sXdcfu0hJfdfeIISxivFa7yl0_LvG2CfWyWvsc_No0_uoatr3PkCGsg1g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/alunos",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"alunos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PontuaçãoTotal",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJCYWNrZW5kIiwic3ViIjoiMyIsImV4cCI6MTcxNDM1ODcwNywiaWF0IjoxNzE0MzU4NDA3fQ.PdYz0LSPzImWyHnhrgWloK3kI9lgm5JbYNI2ca20fVIMxyV3C6Z-5g2zFH300u9BoOE05XDdOs2fN0xdCYcfNaNhOcbclACbi000dAdAa6PWeWTVDHeaqefZSTg7CXErR7LRmnN042SYvB9IFtstzicEolJvlGA2PwSBBarPqlYikmhbveQ7I4gd_5igYEk4c-9BamsrQXrO7k3dUwJoNEqrJOuihjqINDxbXPgBvmuZh0AasuUdtgm05WGLHMX1XCW5DmuJOcQzx6GuOlNXTGTIEfmbM9-lmKLb5s0au39QDiQtdZ4f0L4tIiYReMHEzObMkw7WIgpb4Uo9o9_5Kw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/alunos/1/pontuacao",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"alunos",
+								"1",
+								"pontuacao"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Notas do aluno",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJCYWNrZW5kIiwic3ViIjoiMyIsImV4cCI6MTcxNDM0NDAxNSwiaWF0IjoxNzE0MzQzNzE1fQ.YQvPlKP9YwqrzGZOAAKG6sk8qbQvr48AAnKnlcq6BsvGvu_vIBT97vtYLCUBDHJp2pE3KCsUuUCTTTEFPr6S2QVH4V8kaX6T2nggQGjX8UwqjC6paE61DxDQa-yttC_ZEX7P6r8ZeRXI3blP9AgSF7AryzNf4iv-hFqxhZBvp2A81vWa44qR_og-dPjfcg3CZiGVY-mTemgKidyWPiiOmaIIfAvU7dSPppKtht2eq6oMtWwDrDQCBLZpjqHNld9p1MKUsrEDk4GqoV9kKrQ-37KCA2-nlR55Fq4jdTTVf11r4uNmjKxp39uHBbrTyZQB0YT1aEr4c3gFXFk4x0FToQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/alunos/1/notas",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"alunos",
+								"1",
+								"notas"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Curso",
+			"item": [
+				{
+					"name": "Criar curso",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJCYWNrZW5kIiwic3ViIjoiMSIsImV4cCI6MTcxNDM1ODExNSwiaWF0IjoxNzE0MzU3ODE1fQ.j_PGWx0WTgKk9_N_Dr52RNlNrNTXmrHwnZ7Q4gs2LqL9fb1rZe9jZ_CfTnPfOHgvitzWkGqIl3gGfHgXcN-3oKBvP4aDqqk7_VPwDh3K5RjQuB1BwYZBYH10xO2rivprXXrvVPnJ_LxWV1Ir4wlRmxsy94y9wZ5yJmFXIiJs3kd2_kYIt2VtqPZkfqcWJ-jUFqrKZuDnUjgikz-CyDeTamc1rBHHtHSJEC3Q3PPVdojpzv4pKsMmeqyEQflzrRGUq9rW_qLe6w8m4vGGF3n4K3BUp6JqGDoG41QB9FpdHl1W9NxD42Z-0h_FWc1L1ripaGYkQCrmNII4KPP3gmOwBw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"c++\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/cursos",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cursos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Por Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJCYWNrZW5kIiwic3ViIjoiMSIsImV4cCI6MTcxNDI1ODgzNywiaWF0IjoxNzE0MjU4NTM3fQ.P43QhQRIva6wos2lH9lUweBaOk54Ss2dOptjM5l9YJGH8YefAllkRps5OA58LaWgt2Z2hVQPOQ7NkSCos7Pd0pX-ecCU3W17egK-uOYEicdjC87oZye5Xjvnd3ZVqk2v5J0-qMQ-kzwihe1jg0wcGt3m8GdhFMcKCQbG-O6aMeHN2WvVRZKi_33c_dyYWIRDy1TO9bd8jQP-4ABmIgae2fXHZMzr3PB4v7VMB6mc4GuvooSMa3qA1o7lZrThbnhBdUdfZAsuCnr69I3OtZ2a_lLAJhWfGVfKdhe6XyjTHlKsOhwazm10i6vgJN7DjJe5Aysz_ImsetVeer9z7Cg0Uw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/cursos/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cursos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AtualizarPor Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJCYWNrZW5kIiwic3ViIjoiMSIsImV4cCI6MTcxNDI1ODgzNywiaWF0IjoxNzE0MjU4NTM3fQ.P43QhQRIva6wos2lH9lUweBaOk54Ss2dOptjM5l9YJGH8YefAllkRps5OA58LaWgt2Z2hVQPOQ7NkSCos7Pd0pX-ecCU3W17egK-uOYEicdjC87oZye5Xjvnd3ZVqk2v5J0-qMQ-kzwihe1jg0wcGt3m8GdhFMcKCQbG-O6aMeHN2WvVRZKi_33c_dyYWIRDy1TO9bd8jQP-4ABmIgae2fXHZMzr3PB4v7VMB6mc4GuvooSMa3qA1o7lZrThbnhBdUdfZAsuCnr69I3OtZ2a_lLAJhWfGVfKdhe6XyjTHlKsOhwazm10i6vgJN7DjJe5Aysz_ImsetVeer9z7Cg0Uw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"java\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/cursos/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cursos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar Por Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJCYWNrZW5kIiwic3ViIjoiMSIsImV4cCI6MTcxNDM0MTE0MiwiaWF0IjoxNzE0MzQwODQyfQ.dLzat0A2FAl2C7WD7b9EI1zDj8noWqRDedJQi3uqCjmDZPManRpt7iVQZEghe9ILdz36EMjWI8NTZXBJblfBcIzzBu6a8XLUoDzRQuW9cfTkj_o6dmSD3xiSriHinyhPjUYBL6FXf1kVEvrs8osDjvwFl6guZOL1jNibbPec2srecZCy-1_i9kinThLUIG-NFRB1w_6q3HkOfRjZWjVRPKWlCQazSLpD2s9Uv3dvEbn3okyBOBjhWrjbQ052JtDOZbG7GtodVlVqhjp5TxOWJeKY1MXcDOwD70WTS4UugApXWl2MB0wLq-20d_O-9NxDkAunakOsuRjDHAZMwpHVrw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/cursos/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cursos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ListarTodos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJCYWNrZW5kIiwic3ViIjoiMSIsImV4cCI6MTcxMzc1MTAzNywiaWF0IjoxNzEzNzUwNzM3fQ.BJywaWOMErU_kqlc-zD7-RLacxTKiJfq3bNkA-L6rgsH5bCZ6CYQ6qyu5jBQ77ywsakBFVRJDE3aDSm8BiG-G5bV_dzviIRvDqRBhLYk5ZZ2wbKjn07nIdgwY0Azk9erko8o2OgmVGoQgZzGRLK02lYxkQCHdodEa7OyG5ZEmHITp-apyAahx59bjIlznrUAdogCrrccFO9M0CalVeFJYcBts0xwdjC2v-NqczlTQIwhcGLlBuN0sFpakSMpQGGKUDDZIcWNeW7BsVYnEn8lD37AawUJ_YkUUCCiz49u_SrB5c2qoO3-Ofva2v34Vx1YtOKq_s9J1dp12tXRGlu3Zg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/cursos",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cursos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ListarPorIdCurso",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJCYWNrZW5kIiwic3ViIjoiMSIsImV4cCI6MTcxMzc1NDgxMSwiaWF0IjoxNzEzNzU0NTExfQ.MeKWy4kyEWjCZVcNh3Usy4y8QOO2pYNN6ZukGyInCtpBKG2Ky3y5OrDn61ORScjgmhhmduMamSpoNvqvFDPbEaivUB0Id3I6mlwdVsObHe1ySbb2NYpB2LqH2hhYrNV4-hpxZDpjCRz2_bc4Blwl4tmPMIhwTlmSV84K0oJ82LIOdXkE6K6XME6qlZnQJJ04LSH4n0BQ8mgDLuUVpJ5YyEuuWlfOZElVNFreOT8-_hTuDqAB0Y3NZ1NycEOPadOzXOXC3c3iWhmRqlB4jhW7YT3gqIsHIEGEJk7h2kZRnYVU_s8lcc_4ZDPqoHBvproZY7tC4o7s8fd_TkCa76k2og",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/cursos/1/materias",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cursos",
+								"1",
+								"materias"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Materia",
+			"item": [
+				{
+					"name": "Criar Materia",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJCYWNrZW5kIiwic3ViIjoiMSIsImV4cCI6MTcxNDM0MzgwOCwiaWF0IjoxNzE0MzQzNTA4fQ.nlabAsmbnWni9hg0BuVRE7aiblBp8N0QiamPS7_VDI_j7tg_7K4Dimbppli4QNWRkVl927HelZMEYITDS-77orBLAX9clsVivDm7LFysLX1xF1cnvOxotaphbvsjsB7THVEqsP9v0B1-HVbZzJEuttpzldGdiPl-S8VDVjayPYn0DlzdH9fKPF2_fVnDwDhc7385gWsa1Jm5KzZ5QfwTD8cdipE53f2WtAsrlCnFHPJEiB9hW2nsV25oOo6o4ZFdHy1Jhl6oKyES82nHtKj9dGPuwrOCaKOQmn0kCJp8C46inhPeRwHwgDXUuyjUlz7mO4qCvuH07OekU_6Xg1IkuQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Spring\",\r\n    \"id_curso\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/materias",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"materias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Por Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJCYWNrZW5kIiwic3ViIjoiMSIsImV4cCI6MTcxNDMxNDUyNSwiaWF0IjoxNzE0MzE0MjI1fQ.FSrEoRMm9H2jeUYT20jV7lacQouwQJBuJVT8IL4lCsQ9QpTYxT-rEqmzfJrJQOuomG-zhRO09OMKlsdR1S4K_pYM42iuljR86ZzSBHcBhR42CnQXu8Ybu6vXI8u5PSTvNozAbRqAnLiO91QxjcJikmwniV3P1--vuxabE9T9sk9pCnp2OAXjbzDg_LhfFYQyd3DhjOQKY_DNShMMUozxr5kLpfNaE7QxCA9RZCM-FuMLytPSlxkTpMuaMpDSEB4HUvkrUqYVT-tjrz4RjcDMZL9d9Z1QeGWFrRQJU2yhhwkqzZhOcI2O6Urg_2OSW1t01k0JVw0RL8GvRq6z3xqK8g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/materias/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"materias",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AtualizarPor Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJCYWNrZW5kIiwic3ViIjoiMSIsImV4cCI6MTcxNDMxNDUyNSwiaWF0IjoxNzE0MzE0MjI1fQ.FSrEoRMm9H2jeUYT20jV7lacQouwQJBuJVT8IL4lCsQ9QpTYxT-rEqmzfJrJQOuomG-zhRO09OMKlsdR1S4K_pYM42iuljR86ZzSBHcBhR42CnQXu8Ybu6vXI8u5PSTvNozAbRqAnLiO91QxjcJikmwniV3P1--vuxabE9T9sk9pCnp2OAXjbzDg_LhfFYQyd3DhjOQKY_DNShMMUozxr5kLpfNaE7QxCA9RZCM-FuMLytPSlxkTpMuaMpDSEB4HUvkrUqYVT-tjrz4RjcDMZL9d9Z1QeGWFrRQJU2yhhwkqzZhOcI2O6Urg_2OSW1t01k0JVw0RL8GvRq6z3xqK8g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\" : \"Spring\",\r\n    \"id_curso\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/materias/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"materias",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar Por Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJCYWNrZW5kIiwic3ViIjoiMSIsImV4cCI6MTcxNDM0MTE0MiwiaWF0IjoxNzE0MzQwODQyfQ.dLzat0A2FAl2C7WD7b9EI1zDj8noWqRDedJQi3uqCjmDZPManRpt7iVQZEghe9ILdz36EMjWI8NTZXBJblfBcIzzBu6a8XLUoDzRQuW9cfTkj_o6dmSD3xiSriHinyhPjUYBL6FXf1kVEvrs8osDjvwFl6guZOL1jNibbPec2srecZCy-1_i9kinThLUIG-NFRB1w_6q3HkOfRjZWjVRPKWlCQazSLpD2s9Uv3dvEbn3okyBOBjhWrjbQ052JtDOZbG7GtodVlVqhjp5TxOWJeKY1MXcDOwD70WTS4UugApXWl2MB0wLq-20d_O-9NxDkAunakOsuRjDHAZMwpHVrw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/materias/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"materias",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ListarTodos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJCYWNrZW5kIiwic3ViIjoiMSIsImV4cCI6MTcxNDMxNDUyNSwiaWF0IjoxNzE0MzE0MjI1fQ.FSrEoRMm9H2jeUYT20jV7lacQouwQJBuJVT8IL4lCsQ9QpTYxT-rEqmzfJrJQOuomG-zhRO09OMKlsdR1S4K_pYM42iuljR86ZzSBHcBhR42CnQXu8Ybu6vXI8u5PSTvNozAbRqAnLiO91QxjcJikmwniV3P1--vuxabE9T9sk9pCnp2OAXjbzDg_LhfFYQyd3DhjOQKY_DNShMMUozxr5kLpfNaE7QxCA9RZCM-FuMLytPSlxkTpMuaMpDSEB4HUvkrUqYVT-tjrz4RjcDMZL9d9Z1QeGWFrRQJU2yhhwkqzZhOcI2O6Urg_2OSW1t01k0JVw0RL8GvRq6z3xqK8g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/materias",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"materias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ListarPorIdCurso",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJCYWNrZW5kIiwic3ViIjoiMSIsImV4cCI6MTcxNDMxNDUyNSwiaWF0IjoxNzE0MzE0MjI1fQ.FSrEoRMm9H2jeUYT20jV7lacQouwQJBuJVT8IL4lCsQ9QpTYxT-rEqmzfJrJQOuomG-zhRO09OMKlsdR1S4K_pYM42iuljR86ZzSBHcBhR42CnQXu8Ybu6vXI8u5PSTvNozAbRqAnLiO91QxjcJikmwniV3P1--vuxabE9T9sk9pCnp2OAXjbzDg_LhfFYQyd3DhjOQKY_DNShMMUozxr5kLpfNaE7QxCA9RZCM-FuMLytPSlxkTpMuaMpDSEB4HUvkrUqYVT-tjrz4RjcDMZL9d9Z1QeGWFrRQJU2yhhwkqzZhOcI2O6Urg_2OSW1t01k0JVw0RL8GvRq6z3xqK8g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/cursos/1/materias",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cursos",
+								"1",
+								"materias"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Nota",
+			"item": [
+				{
+					"name": "Criar Nota",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJCYWNrZW5kIiwic3ViIjoiMyIsImV4cCI6MTcxNDM1NjY2MSwiaWF0IjoxNzE0MzU2MzYxfQ.DZwxXZco6LUEoegos4J0H48oiGWshtK7ZuUd2EOhv6ulXakhwOxIrYsO5LP4qUHB5m9WBrSqTF6PuMhazftYmLj1MDiERNhG5amWr-2xmqNzhsw6jArbJRuYMzyaQ3c1VSnUgxzE4sRcANMEyGcHDOT1yeP12uTXlS-T-Z6UE2PkfIrKrscC5s55ILPSfvwwTrKy4uFe-mJFeWHXbefrGXphw16NI6dTqRLSHnag5PnIILyGrqKpzd_O6nnm3BoaxFoa1DrHMfbbt1uvpGR7i9UcrYX4DHKwerzBpg2OahotFzqJ2aaywWi69jk7BQ3CMGoNElPi5aZLcC01llVTdQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_aluno\": 1,\r\n    \"id_professor\" : 1,\r\n    \"id_materia\": 1,\r\n    \"valor\": 10,\r\n    \"data\": \"2024-04-14\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/notas",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"notas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Por Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJCYWNrZW5kIiwic3ViIjoiMSIsImV4cCI6MTcxMzc1NDgxMSwiaWF0IjoxNzEzNzU0NTExfQ.MeKWy4kyEWjCZVcNh3Usy4y8QOO2pYNN6ZukGyInCtpBKG2Ky3y5OrDn61ORScjgmhhmduMamSpoNvqvFDPbEaivUB0Id3I6mlwdVsObHe1ySbb2NYpB2LqH2hhYrNV4-hpxZDpjCRz2_bc4Blwl4tmPMIhwTlmSV84K0oJ82LIOdXkE6K6XME6qlZnQJJ04LSH4n0BQ8mgDLuUVpJ5YyEuuWlfOZElVNFreOT8-_hTuDqAB0Y3NZ1NycEOPadOzXOXC3c3iWhmRqlB4jhW7YT3gqIsHIEGEJk7h2kZRnYVU_s8lcc_4ZDPqoHBvproZY7tC4o7s8fd_TkCa76k2og",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/notas/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"notas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AtualizarPor Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJCYWNrZW5kIiwic3ViIjoiMiIsImV4cCI6MTcxNDM1ODc2MiwiaWF0IjoxNzE0MzU4NDYyfQ.VmhFY7DqxVV9sWs7qP21ffut0pJgHjH5_Swdaz_7mxp4ienvncZrotf-AIrSe7uSEKPtiCnw0dGZlAs3O1TNo03RMOiGrA4TquposIifaMqybRrjO1ZosDD0JbNQqNyeUdpU1C5TaQdd00FjKlB0Yqo64bf9eASdPbafjshwnqcrku2JqKj7z4-mUs9K-65GnXtxcIZlOacbgu2PMkVg-getgGO9g2sa0UP1uDHg2R0_QX9XG5BmE_H_KJfFKlBvxGuNS21QSh2umnejS1c1Gd0baxBcbOJyHdx23QnrJbSpXhhd69JLCKA7KthVD75gVYZBBYCNQatRkZqzUzUorQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_aluno\": 1,\r\n    \"id_professor\" : 1,\r\n    \"id_materia\": 1,\r\n    \"valor\": 0,\r\n    \"data\": \"2024-04-15\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/notas/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"notas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar Por Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJCYWNrZW5kIiwic3ViIjoiMSIsImV4cCI6MTcxNDM0MTE0MiwiaWF0IjoxNzE0MzQwODQyfQ.dLzat0A2FAl2C7WD7b9EI1zDj8noWqRDedJQi3uqCjmDZPManRpt7iVQZEghe9ILdz36EMjWI8NTZXBJblfBcIzzBu6a8XLUoDzRQuW9cfTkj_o6dmSD3xiSriHinyhPjUYBL6FXf1kVEvrs8osDjvwFl6guZOL1jNibbPec2srecZCy-1_i9kinThLUIG-NFRB1w_6q3HkOfRjZWjVRPKWlCQazSLpD2s9Uv3dvEbn3okyBOBjhWrjbQ052JtDOZbG7GtodVlVqhjp5TxOWJeKY1MXcDOwD70WTS4UugApXWl2MB0wLq-20d_O-9NxDkAunakOsuRjDHAZMwpHVrw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/notas/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"notas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ListarTodos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJCYWNrZW5kIiwic3ViIjoiMSIsImV4cCI6MTcxMzc1NDA0NiwiaWF0IjoxNzEzNzUzNzQ2fQ.AwGkH5bPbmAWX43pfBW7CGcrArbOgDwUV7PqDria3AKgZmhANy_SU3BdWUbfpNI5VX7hEfxGSKQ53hzhe11qw77gqJM-2sdy-V5JZbJLuPRVolomWB4Nx_fzKeIfcJVkaaS3pWJmd4GPvdJe7w0350Z9IDF83KPBbSqvC-tsarYmMcQ6CHFhXy6cg5UvlLg2uGf7ROCXmWLqnUlMulqSzRZ4j9Ykjh0r1lhLo4MbzIJpfOkFcBYF3s7ij3_47Wo8-bKe6EqsYVJraupKdQJEdbKlzy5O-8iQaNd2zM5iVs0XSy4tCVTwFVeeZ_dITBjR--G3NZGBV3oQK18Lf7EZ1Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/notas",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"notas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Notas do aluno",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJCYWNrZW5kIiwic3ViIjoiMSIsImV4cCI6MTcxNDMxNTA2NCwiaWF0IjoxNzE0MzE0NzY0fQ.IR7UnBr-l5dsQuFkbXoJbRxc1bL7scEVQyIX0dbKVH3kwZRIjQ1EUeYPkLPbi-nucWZfIU4hNSfvxx5ZbQziOTtGlctP6MUfqSGchqKEqqBQoeZy-i1E2ff-4jURuuiXddfo5LONFNrBV4sQrK-KtN-EV8iXw8cPsG-jlmLqWf_TOFYFS6FpYlILhSBIOj6RZeNnfeOyUw50v2i8tiW9g8-uJs9me-9_6s25qtblabGrgdofpKpm2jKs8RsmoCzuxVahekzTkN5-lZyq1w9ZwVoEzecSSaaznvFKaib8igSw2cLn0CpA5hDTgaOifnB28HVziiPihMgY3Gx86UESTw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/alunos/1/notas",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"alunos",
+								"1",
+								"notas"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": "res.body.tokenDeAcesso",
+			"type": "string"
+		},
+		{
+			"key": "id",
+			"value": "1"
+		}
+	]
+}
